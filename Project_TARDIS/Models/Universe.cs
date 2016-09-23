@@ -9,5 +9,10 @@ namespace Project_TARDIS
     public class Universe
     {
         public List<SpaceTimeLocation> SpaceTimeLocations { get; set; }
+
+        public Universe()
+        {
+            this.SpaceTimeLocations = new List<SpaceTimeLocation>();
+        }
     }
 }

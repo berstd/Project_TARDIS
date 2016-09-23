@@ -1,10 +1,12 @@
-﻿namespace CodingActivity_TheTravelingSalesperson.Solution
+﻿namespace Project_TARDIS
 {
-    public enum Project_TARDIS
+    public enum MenuOption
     {
         None,
-        ChoosePlayer,
+        PlayerSetup,
         SpaceTimeTravel,
+        PlayerInfo,
+        SpaceTimeLocationInfo,
         Exit
     }
 }

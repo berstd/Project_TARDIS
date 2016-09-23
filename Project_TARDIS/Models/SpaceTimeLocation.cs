@@ -26,6 +26,12 @@ namespace Project_TARDIS
             set { _name = value; }
         }
 
+        public string SpaceTimeLocationID
+        {
+            get { return _spaceTimeLocationID; }
+            set { _spaceTimeLocationID = value; }
+        }
+
         public string Description
         {
             get { return _description; }
@@ -36,12 +42,6 @@ namespace Project_TARDIS
         {
             get { return _accessable; }
             set { _accessable = value; }
-        }
-
-        public string SpaceTimeLocationID
-        {
-            get { return _spaceTimeLocationID; }
-            set { _spaceTimeLocationID = value; }
         }
 
         #endregion

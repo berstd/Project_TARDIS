@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Project_TARDIS
 {
+    /// <summary>
+    /// base class for the player and all game characters
+    /// </summary>
     public class Character
     {
         #region ENUMERABLES
@@ -25,14 +28,6 @@ namespace Project_TARDIS
         private string _spaceTimeLocationID;
         private RaceType _race;
 
-        public RaceType Race
-        {
-            get { return _race; }
-            set { _race = value; }
-        }
-
-
-
         #endregion
 
 
@@ -50,6 +45,12 @@ namespace Project_TARDIS
             set { _spaceTimeLocationID = value; }
         }
 
+        public RaceType Race
+        {
+            get { return _race; }
+            set { _race = value; }
+        }
+
         #endregion
 
 
@@ -60,9 +61,10 @@ namespace Project_TARDIS
 
         }
 
-        public Character(string name, string spaceTimeLocationID)
+        public Character(string name, RaceType race, string spaceTimeLocationID)
         {
             _name = name;
+            _race = race;
             _spaceTimeLocationID = spaceTimeLocationID;
         }
 

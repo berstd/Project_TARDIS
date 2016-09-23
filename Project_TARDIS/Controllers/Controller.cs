@@ -10,15 +10,16 @@ namespace Project_TARDIS
     {
         #region FIELDS
 
-        private bool _usingApplication;
+        private bool _usingGame;
 
         //
-        // declare ConsoleView and Salesperson objects for the Controller to use
-        // Note: There is no need for a Salesperson or ConsoleView property given only the Controller 
-        //       will access the ConsoleView object and will pass the Salesperson object to the ConsoleView.
+        // declare all objects required for the game
+        // Note - these field objects do not require properties since they
+        //        are not accessed outside of the controller
         //
-        private ConsoleView _consoleView;
-        private ;
+        private ConsoleView _gameConsoleView;
+        private Player _gamePlayer;
+        private Universe _gameUniverse;
 
         #endregion
 
@@ -32,22 +33,22 @@ namespace Project_TARDIS
 
         public Controller()
         {
-            InitializeController();
+            InitializeGame();
 
             //
             // instantiate a Salesperson object
             //
-            _salesperson = new Salesperson();
+            _gamePlayer = new Player();
 
             //
             // instantiate a ConsoleView object
             //
-            _consoleView = new ConsoleView(_salesperson);
+            _gameConsoleView = new ConsoleView(_gamePlayer, _gameUniverse);
 
             //
             // begins running the application UI
             //
-            ManageApplicationLoop();
+            ManageGameLoop();
         }
 
         #endregion
@@ -56,34 +57,37 @@ namespace Project_TARDIS
         #region METHODS
 
         /// <summary>
-        /// initialize the controller 
+        /// initialize the game 
         /// </summary>
-        private void InitializeController()
+        private void InitializeGame()
         {
-            _usingApplication = true;
+            _usingGame = true;
+            _gameUniverse = new Universe();
+            _gamePlayer = new Player();
+            _gameConsoleView = new ConsoleView(_gamePlayer, _gameUniverse);
+
+            IntializeUniverse();
         }
 
         /// <summary>
         /// method to manage the application setup and control loop
         /// </summary>
-        private void ManageApplicationLoop()
+        private void ManageGameLoop()
         {
             MenuOption userMenuChoice;
 
-            _consoleView.DisplayWelcomeScreen();
-
-            _consoleView.DisplaySetupAccount();
+            _gameConsoleView.DisplayWelcomeScreen();
 
             //
-            // application loop
+            // game loop
             //
-            while (_usingApplication)
+            while (_usingGame)
             {
 
                 //
                 // get a menu choice from the ConsoleView object
                 //
-                userMenuChoice = _consoleView.DisplayGetUserMenuChoice();
+                userMenuChoice = _gameConsoleView.DisplayGetUserMenuChoice();
 
                 //
                 // choose an action based on the user's menu choice
@@ -92,38 +96,49 @@ namespace Project_TARDIS
                 {
                     case MenuOption.None:
                         break;
-                    case MenuOption.Travel:
-                        _salesperson.CitiesVisited.Add(_consoleView.DisplayGetNextCity());
+                    case MenuOption.PlayerSetup:
+                        _gameConsoleView.DisplayPlayerSetup();
                         break;
-                    case MenuOption.Buy:
-                        _salesperson.CurrentStock.AddWidgets(_consoleView.DisplayGetNumberOfUnitsToBuy());
+                    case MenuOption.SpaceTimeTravel:
+                        _gameConsoleView.DisplayTravelToSpaceTimeLocation();
                         break;
-                    case MenuOption.Sell:
-                        _salesperson.CurrentStock.SubtractWidgets(_consoleView.DisplayGetNumberOfUnitsToSell());
+                    case MenuOption.SpaceTimeLocationInfo:
+                        _gameConsoleView.DisplaySpaceTimeLocations();
                         break;
-                    case MenuOption.DisplayInventory:
-                        _consoleView.DisplayInventory();
-                        break;
-                    case MenuOption.DisplayCities:
-                        _consoleView.DisplayCitiesTraveled();
-                        break;
-                    case MenuOption.DisplayAccountInfo:
-                        _consoleView.DisplayAccountInfo();
+                    case MenuOption.PlayerInfo:
+                        _gameConsoleView.DisplayPlayerInfo();
                         break;
                     case MenuOption.Exit:
-                        _usingApplication = false;
+                        _usingGame = false;
                         break;
                     default:
                         break;
                 }
             }
 
-            _consoleView.DisplayClosingScreen();
+            _gameConsoleView.DisplayExitPrompt();
 
             //
             // close the application
             //
             Environment.Exit(1);
+        }
+
+        /// <summary>
+        /// initialize the universe with all of the space-time locations
+        /// </summary>
+        private void IntializeUniverse()
+        {
+            _gameUniverse.SpaceTimeLocations.Add(new SpaceTimeLocation
+            {
+                Name = "TARDIS Base",
+                SpaceTimeLocationID = "B001",
+                Description = "The Norlon Corporation's secret laboratory located deep underground, " +
+                              " beneath a nondescript 7-11 on the south-side of Toledo, OH.",
+                Accessable = true
+
+            }
+            );
         }
 
         #endregion

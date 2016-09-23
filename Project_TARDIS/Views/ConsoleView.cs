@@ -14,11 +14,10 @@ namespace Project_TARDIS
         #region FIELDS
 
         //
-        // declare a Salesperson object for the Controller to use
-        // Note: There is no need for a Salesperson property given the Controller already 
-        //       has access to the same Salesperson object.
+        // declare a Universe and Player object for the ConsoleView object to use
         //
-        private Salesperson _salesperson;
+        Universe _gameUniverse;
+        Player _gamePlayer;
 
         #endregion
 
@@ -31,9 +30,10 @@ namespace Project_TARDIS
         /// <summary>
         /// default constructor to create the console view objects
         /// </summary>
-        public ConsoleView(Salesperson salesperson)
+        public ConsoleView(Player gamePlayer, Universe gameUniverse)
         {
-            _salesperson = salesperson;
+            _gamePlayer = gamePlayer;
+            _gameUniverse = gameUniverse;
 
             InitializeConsole();
         }
@@ -48,7 +48,7 @@ namespace Project_TARDIS
         private void InitializeConsole()
         {
             ConsoleUtil.WindowTitle = "Laughing Leaf Productions";
-            ConsoleUtil.HeaderText = "The Traveling Salesperson Application";
+            ConsoleUtil.HeaderText = "The TARDIS Project";
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Project_TARDIS
             Console.CursorVisible = false;
 
             Console.WriteLine();
-            ConsoleUtil.DisplayMessage("Thank you for using the application. Press any key to Exit.");
+            ConsoleUtil.DisplayMessage("Thank you for playing The TARDIS Project. Press any key to Exit.");
 
             Console.ReadKey();
 
@@ -95,100 +95,111 @@ namespace Project_TARDIS
 
             ConsoleUtil.DisplayReset();
 
+            ConsoleUtil.DisplayMessage("The TARDIS Project");
+            ConsoleUtil.DisplayMessage("");
             ConsoleUtil.DisplayMessage("Written by John Velis");
             ConsoleUtil.DisplayMessage("Northwestern Michigan College");
             Console.WriteLine();
 
+            //
+            // TODO update opening screen
+            //
+
             sb.Clear();
-            sb.AppendFormat("You are a traveling salesperson buying and selling widgets ");
-            sb.AppendFormat("around the country. You will be prompted regarding which city ");
-            sb.AppendFormat("you wish to travel to and will then be asked whether you wish to buy ");
-            sb.AppendFormat("or sell widgets.");
+            sb.AppendFormat("You have been hired by the Norlon Corporation to participate ");
+            sb.AppendFormat("in its latest endeavor, the TARDIS Project. Your mission is to ");
+            sb.AppendFormat("test the limits of the new TARDIS Machine and report back to ");
+            sb.AppendFormat("the Norlon Corporation.");
             ConsoleUtil.DisplayMessage(sb.ToString());
             Console.WriteLine();
 
             sb.Clear();
-            sb.AppendFormat("Your first task will be to set up your account details.");
+            sb.AppendFormat("Your first task will be to set up the initial parameters of your mission.");
             ConsoleUtil.DisplayMessage(sb.ToString());
 
             DisplayContinuePrompt();
         }
 
         /// <summary>
-        /// setup the new salesperson object with the initial data
-        /// Note: To maintain the pattern of only the Controller changing the data this method should
-        ///       return a Salesperson object with the initial data to the controller. For simplicity in 
-        ///       this demo, the ConsoleView object is allowed to access the Salesperson object's properties.
+        /// setup the new Player object
         /// </summary>
-        public void DisplaySetupAccount()
+        public void DisplayPlayerSetup()
         {
             string userResponse;
 
-            ConsoleUtil.HeaderText = "Account Setup";
+            ConsoleUtil.HeaderText = "Initial Mission Parameters";
             ConsoleUtil.DisplayReset();
 
-            ConsoleUtil.DisplayMessage("Setup your account now.");
-            Console.WriteLine();
-
-            ConsoleUtil.DisplayPromptMessage("Enter your first name: ");
-            _salesperson.FirstName = Console.ReadLine();
-            Console.WriteLine();
-
-            ConsoleUtil.DisplayPromptMessage("Enter your last name: ");
-            _salesperson.LastName = Console.ReadLine();
-            Console.WriteLine();
-
-            ConsoleUtil.DisplayPromptMessage("Enter your account ID: ");
-            _salesperson.AccountID = Console.ReadLine();
-            Console.WriteLine();
-
-            ConsoleUtil.DisplayMessage("Widget Types");
-            Console.WriteLine();
+            //
+            // get player's name
+            //
+            ConsoleUtil.DisplayPromptMessage("Enter your name: ");
+            _gamePlayer.Name = Console.ReadLine();
+            ConsoleUtil.DisplayMessage("");
 
             //
-            // list all widget types
+            // get player's race
             //
-            foreach (string widgeType in Enum.GetNames(typeof(WidgetItemStock.WidgetType)))
-            {
-                //
-                // do not display the "None" enum value
-                //
-                if (widgeType != WidgetItemStock.WidgetType.None.ToString())
-                {
-                    ConsoleUtil.DisplayMessage(widgeType);
-                }
-
-            }
+            _gamePlayer.Race = DisplayGetPlayersRace();
+            ConsoleUtil.DisplayMessage("");
 
             //
-            // TODO - add validation
+            // get player's starting space-time location
             //
-            Console.WriteLine();
-            ConsoleUtil.DisplayPromptMessage("Enter the widget type: ");
+            DisplaySpaceTimeLocationTable();
+
+            ConsoleUtil.DisplayPromptMessage("Enter your space-time destination ID: ");
             userResponse = Console.ReadLine();
-            _salesperson.CurrentStock.Type = (WidgetItemStock.WidgetType)Enum.Parse(typeof(WidgetItemStock.WidgetType), userResponse, true);
+            _gamePlayer.SpaceTimeLocationID = userResponse;
 
-            ConsoleUtil.DisplayPromptMessage("Enter the current number of widgets in your stock: ");
-            _salesperson.CurrentStock.AddWidgets(int.Parse(Console.ReadLine()));
-            Console.WriteLine();
-
-            ConsoleUtil.DisplayReset();
-
-            ConsoleUtil.DisplayMessage("Your account is setup");
+            ConsoleUtil.DisplayMessage("Your mission setup is complete.");
 
             DisplayContinuePrompt();
         }
 
-        /// <summary>
-        /// display a closing screen when the user quits the application
-        /// </summary>
-        public void DisplayClosingScreen()
+        public Player.RaceType DisplayGetPlayersRace()
         {
-            ConsoleUtil.DisplayReset();
 
-            ConsoleUtil.DisplayMessage("Thank you for using The Traveling Salesperson Application.");
+            //
+            // display all race types on a line
+            //
+            ConsoleUtil.DisplayMessage("Races");
+            StringBuilder sb = new StringBuilder();
+            foreach (Character.RaceType raceType in Enum.GetValues(typeof(Character.RaceType)))
+            {
+                sb.Append($" [{raceType}] ");
+            }
+            ConsoleUtil.DisplayMessage(sb.ToString());
 
-            DisplayContinuePrompt();
+            ConsoleUtil.DisplayPromptMessage("Enter your race: ");
+            Character.RaceType playerRace;
+            Enum.TryParse<Character.RaceType>(Console.ReadLine(), out playerRace);
+
+            return playerRace;
+        }
+
+        /// <summary>
+        /// generate a table of space-time location names and ids
+        /// </summary>
+        public void DisplaySpaceTimeLocationTable()
+        {
+            int locationNumber = 1;
+
+            //
+            // table headings
+            //
+            ConsoleUtil.DisplayMessage(" # ".PadRight(5) + "Location Name".PadRight(20) + "Location ID".PadRight(10));
+            ConsoleUtil.DisplayMessage("---".PadRight(20) + "-----------".PadRight(10));
+
+            //
+            // location name and id
+            //
+            foreach (SpaceTimeLocation location in _gameUniverse.SpaceTimeLocations)
+            {
+                ConsoleUtil.DisplayMessage(locationNumber.ToString().PadRight(5) + location.Name.PadRight(20) + location.SpaceTimeLocationID.PadRight(10));
+                locationNumber++;
+            }
+
         }
 
         /// <summary>
@@ -213,12 +224,10 @@ namespace Project_TARDIS
                 ConsoleUtil.DisplayMessage("Please type the number of your menu choice.");
                 Console.WriteLine();
                 Console.WriteLine(
-                    "\t" + "1. Travel" + Environment.NewLine +
-                    "\t" + "2. Buy" + Environment.NewLine +
-                    "\t" + "3. Sell" + Environment.NewLine +
-                    "\t" + "4. Display Inventory" + Environment.NewLine +
-                    "\t" + "5. Display Cities" + Environment.NewLine +
-                    "\t" + "6. Display Account Info" + Environment.NewLine +
+                    "\t" + "1. Setup Your Player" + Environment.NewLine +
+                    "\t" + "2. Travel to a New Space-Time Location" + Environment.NewLine +
+                    "\t" + "3. Display Space-Time Location Info" + Environment.NewLine +
+                    "\t" + "4. Display Player Info" + Environment.NewLine +
                     "\t" + "E. Exit" + Environment.NewLine);
 
                 //
@@ -229,27 +238,19 @@ namespace Project_TARDIS
                 switch (userResponse.KeyChar)
                 {
                     case '1':
-                        userMenuChoice = MenuOption.Travel;
+                        userMenuChoice = MenuOption.PlayerSetup;
                         usingMenu = false;
                         break;
                     case '2':
-                        userMenuChoice = MenuOption.Buy;
+                        userMenuChoice = MenuOption.SpaceTimeTravel;
                         usingMenu = false;
                         break;
                     case '3':
-                        userMenuChoice = MenuOption.Sell;
+                        userMenuChoice = MenuOption.SpaceTimeLocationInfo;
                         usingMenu = false;
                         break;
                     case '4':
-                        userMenuChoice = MenuOption.DisplayInventory;
-                        usingMenu = false;
-                        break;
-                    case '5':
-                        userMenuChoice = MenuOption.DisplayCities;
-                        usingMenu = false;
-                        break;
-                    case '6':
-                        userMenuChoice = MenuOption.DisplayAccountInfo;
+                        userMenuChoice = MenuOption.PlayerInfo;
                         usingMenu = false;
                         break;
                     case 'E':
@@ -274,11 +275,12 @@ namespace Project_TARDIS
 
             return userMenuChoice;
         }
+
         /// <summary>
-        /// get the next city to travel to from the user
+        /// 
         /// </summary>
         /// <returns>string City</returns>
-        public string DisplayGetNextCity()
+        public string DisplayTravelToSpaceTimeLocation()
         {
             string nextCity = "";
 
@@ -290,101 +292,29 @@ namespace Project_TARDIS
             return nextCity;
         }
 
-        /// <summary>
-        /// get the number of widget units to buy from the user
-        /// </summary>
-        /// <returns>int number of units to buy</returns>
-        public int DisplayGetNumberOfUnitsToBuy()
-        {
-            int numberOfUnitsToAdd;
 
-            ConsoleUtil.HeaderText = "Buy Inventory";
-            ConsoleUtil.DisplayReset();
-
-            // TODO - validate user input: units to buy
-            ConsoleUtil.DisplayPromptMessage("Enter the number of " + _salesperson.CurrentStock.Type + " widget units to buy:");
-            numberOfUnitsToAdd = int.Parse(Console.ReadLine());
-
-            ConsoleUtil.DisplayReset();
-
-            ConsoleUtil.DisplayMessage(numberOfUnitsToAdd + " " + _salesperson.CurrentStock.Type.ToString() + " widgets have been added to the inventory.");
-
-            DisplayContinuePrompt();
-
-            return numberOfUnitsToAdd;
-        }
 
         /// <summary>
-        /// get the number of widget units to sell from the user
-        /// </summary>
-        /// <returns>int number of units to buy</returns>
-        public int DisplayGetNumberOfUnitsToSell()
-        {
-            int numberOfUnitsToSell;
-
-            ConsoleUtil.HeaderText = "Sell Inventory";
-            ConsoleUtil.DisplayReset();
-
-            // TODO - validate user input: units to sell
-            // TODO - validate that the current inventory is greater than the units to sell
-            ConsoleUtil.DisplayPromptMessage("Enter the number of " + _salesperson.CurrentStock.Type.ToString() + " widget units to sell:");
-            numberOfUnitsToSell = int.Parse(Console.ReadLine());
-
-            ConsoleUtil.DisplayReset();
-
-            ConsoleUtil.DisplayMessage(numberOfUnitsToSell + " " + _salesperson.CurrentStock.Type.ToString() + " widgets have been subtracted from the inventory.");
-
-            DisplayContinuePrompt();
-
-            return numberOfUnitsToSell;
-        }
-
+        ///
         /// <summary>
-        /// display the current inventory
+        /// display all space-time locations
         /// </summary>
-        public void DisplayInventory()
+        public void DisplaySpaceTimeLocations()
         {
-            ConsoleUtil.HeaderText = "Current Inventory";
+            ConsoleUtil.HeaderText = "Space-Time Locations";
             ConsoleUtil.DisplayReset();
-
-            ConsoleUtil.DisplayMessage("Widget type: " + _salesperson.CurrentStock.Type);
-            ConsoleUtil.DisplayMessage("Number of units: " + _salesperson.CurrentStock.NumberOfUnits);
-            Console.WriteLine();
 
             DisplayContinuePrompt();
         }
 
-        /// <summary>
-        /// display a list of the cities traveled
-        /// </summary>
-        public void DisplayCitiesTraveled()
-        {
-            ConsoleUtil.DisplayReset();
-
-            ConsoleUtil.DisplayMessage("You have traveled to the following cities.");
-            Console.WriteLine();
-
-            foreach (string city in _salesperson.CitiesVisited)
-            {
-                ConsoleUtil.DisplayMessage(city);
-            }
-
-            DisplayContinuePrompt();
-        }
 
         /// <summary>
         /// display the current account information
         /// </summary>
-        public void DisplayAccountInfo()
+        public void DisplayPlayerInfo()
         {
-            ConsoleUtil.HeaderText = "Account Info";
+            ConsoleUtil.HeaderText = "Player Info";
             ConsoleUtil.DisplayReset();
-
-            ConsoleUtil.DisplayMessage("First Name: " + _salesperson.FirstName);
-            ConsoleUtil.DisplayMessage("Last Name: " + _salesperson.LastName);
-            ConsoleUtil.DisplayMessage("Account ID: " + _salesperson.AccountID);
-            ConsoleUtil.DisplayMessage("Widget Type: " + _salesperson.CurrentStock.Type);
-            ConsoleUtil.DisplayMessage("Units of Widgets: " + _salesperson.CurrentStock.NumberOfUnits);
 
             DisplayContinuePrompt();
         }
