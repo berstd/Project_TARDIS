@@ -14,5 +14,20 @@ namespace Project_TARDIS
         {
             this.SpaceTimeLocations = new List<SpaceTimeLocation>();
         }
+        
+        public SpaceTimeLocation GetSpaceTimeLocationByID(int ID)
+        {
+            //
+            // run through the space-time location list and grab the correct one
+            //
+            foreach (SpaceTimeLocation location in SpaceTimeLocations)
+            {
+                if (location.SpaceTimeLocationID == ID)
+                {
+                    return location;
+                }
+            }
+        }
     }
 }
+

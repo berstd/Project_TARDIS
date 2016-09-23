@@ -457,6 +457,12 @@ namespace Project_TARDIS
             ConsoleUtil.HeaderText = "Player Info";
             ConsoleUtil.DisplayReset();
 
+            ConsoleUtil.DisplayMessage($"Player's Name: {_gamePlayer.Name}");
+            ConsoleUtil.DisplayMessage("");
+            ConsoleUtil.DisplayMessage($"Player's Race: {_gamePlayer.Race}");
+            ConsoleUtil.DisplayMessage("");
+            ConsoleUtil.DisplayMessage($"Player's Current Location: {_gamePlayer.Race}");
+
             DisplayContinuePrompt();
         }
 
