@@ -3,7 +3,7 @@
     public enum MenuOption
     {
         None,
-        PlayerSetup,
+        MissionSetup,
         SpaceTimeTravel,
         PlayerInfo,
         SpaceTimeLocationInfo,

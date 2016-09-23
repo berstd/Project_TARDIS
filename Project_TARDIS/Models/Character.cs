@@ -15,6 +15,7 @@ namespace Project_TARDIS
 
         public enum RaceType
         {
+            None,
             Human,
             Thorian,
             Xantorian
@@ -25,7 +26,7 @@ namespace Project_TARDIS
         #region FIELDS
 
         private string _name;
-        private string _spaceTimeLocationID;
+        private int _spaceTimeLocationID;
         private RaceType _race;
 
         #endregion
@@ -39,7 +40,7 @@ namespace Project_TARDIS
             set { _name = value; }
         }
 
-        public string SpaceTimeLocationID
+        public int SpaceTimeLocationID
         {
             get { return _spaceTimeLocationID; }
             set { _spaceTimeLocationID = value; }
@@ -61,7 +62,7 @@ namespace Project_TARDIS
 
         }
 
-        public Character(string name, RaceType race, string spaceTimeLocationID)
+        public Character(string name, RaceType race, int spaceTimeLocationID)
         {
             _name = name;
             _race = race;

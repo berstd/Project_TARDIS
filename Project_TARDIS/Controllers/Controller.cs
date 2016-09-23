@@ -96,8 +96,8 @@ namespace Project_TARDIS
                 {
                     case MenuOption.None:
                         break;
-                    case MenuOption.PlayerSetup:
-                        _gameConsoleView.DisplayPlayerSetup();
+                    case MenuOption.MissionSetup:
+                        _gameConsoleView.DisplayMissionSetup();
                         break;
                     case MenuOption.SpaceTimeTravel:
                         _gameConsoleView.DisplayTravelToSpaceTimeLocation();
@@ -132,7 +132,7 @@ namespace Project_TARDIS
             _gameUniverse.SpaceTimeLocations.Add(new SpaceTimeLocation
             {
                 Name = "TARDIS Base",
-                SpaceTimeLocationID = "B001",
+                SpaceTimeLocationID = 1,
                 Description = "The Norlon Corporation's secret laboratory located deep underground, " +
                               " beneath a nondescript 7-11 on the south-side of Toledo, OH.",
                 Accessable = true

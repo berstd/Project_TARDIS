@@ -29,7 +29,7 @@ namespace Project_TARDIS
 
         }
 
-        public Player(string name, RaceType race, string spaceTimeLocationID) : base(name, race, spaceTimeLocationID)
+        public Player(string name, RaceType race, int spaceTimeLocationID) : base(name, race, spaceTimeLocationID)
         {
 
         }

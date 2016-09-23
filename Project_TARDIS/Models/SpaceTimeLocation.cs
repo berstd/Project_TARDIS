@@ -11,7 +11,7 @@ namespace Project_TARDIS
         #region FIELDS
 
         private string _name;
-        private string _spaceTimeLocationID; // must be a unique value for each object
+        private int _spaceTimeLocationID; // must be a unique value for each object
         private string _description;
         private bool _accessable;
 
@@ -26,7 +26,7 @@ namespace Project_TARDIS
             set { _name = value; }
         }
 
-        public string SpaceTimeLocationID
+        public int SpaceTimeLocationID
         {
             get { return _spaceTimeLocationID; }
             set { _spaceTimeLocationID = value; }
