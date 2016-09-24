@@ -11,6 +11,7 @@ namespace Project_TARDIS
         #region FIELDS
 
         private bool _usingGame;
+        bool _missionInitialized = false;
 
         //
         // declare all objects required for the game
@@ -97,10 +98,17 @@ namespace Project_TARDIS
                     case MenuOption.None:
                         break;
                     case MenuOption.MissionSetup:
-                        _gameConsoleView.DisplayMissionSetup();
+                        if (!_missionInitialized)
+                        {
+                            _gameConsoleView.DisplayMissionSetupIntro();
+                            _gamePlayer.Name = _gameConsoleView.DisplayGetPlayersName();
+                            _gamePlayer.Race = _gameConsoleView.DisplayGetPlayersRace();
+                            _gamePlayer.SpaceTimeLocationID = _gameConsoleView.DisplayGetPlayersNextLocation().SpaceTimeLocationID;
+                        }
+
                         break;
                     case MenuOption.SpaceTimeTravel:
-                        _gameConsoleView.DisplayTravelToSpaceTimeLocation();
+                        _gameConsoleView.DisplayGetPlayersNextLocation();
                         break;
                     case MenuOption.SpaceTimeLocationInfo:
                         _gameConsoleView.DisplaySpaceTimeLocations();
@@ -136,9 +144,16 @@ namespace Project_TARDIS
                 Description = "The Norlon Corporation's secret laboratory located deep underground, " +
                               " beneath a nondescript 7-11 on the south-side of Toledo, OH.",
                 Accessable = true
-
-            }
-            );
+            });
+            _gameUniverse.SpaceTimeLocations.Add(new SpaceTimeLocation
+            {
+                Name = "Xantoria Market",
+                SpaceTimeLocationID = 2,
+                Description = "The Xantoria market, once controlled by the Thorian elite, is now an " +
+                              "open market managed by the Xantorian Commerce Coop. It is a place " +
+                              "where many races from various systems trade goods.",
+                Accessable = true
+            });
         }
 
         #endregion

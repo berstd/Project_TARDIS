@@ -18,7 +18,6 @@ namespace Project_TARDIS
         //
         Universe _gameUniverse;
         Player _gamePlayer;
-        bool _missionInitialized = false;
 
         #endregion
 
@@ -124,54 +123,42 @@ namespace Project_TARDIS
         /// <summary>
         /// setup the new Player object
         /// </summary>
-        public void DisplayMissionSetup()
+        public void DisplayMissionSetupIntro()
         {
-            if (!_missionInitialized)
-            {
-                //
-                // display header
-                //
-                ConsoleUtil.HeaderText = "Mission Setup";
-                ConsoleUtil.DisplayReset();
-
-                //
-                // display intro
-                //
-                ConsoleUtil.DisplayMessage("You will now be prompted to enter the starting parameters of your mission.");
-                DisplayContinuePrompt();
-
-                //
-                // get player's name
-                //
-                _gamePlayer.Name = DisplayGetPlayersName();
-
-                //
-                // get player's race
-                //
-                _gamePlayer.Race = DisplayGetPlayersRace();
-
-                //
-                // get player's starting space-time location
-                //
-                _gamePlayer.SpaceTimeLocationID = DisplayGetPlayersNextLocation().SpaceTimeLocationID;
-
-                //
-                // set mission initialized status
-                //
-                _missionInitialized = true;
-            }
-
-            //
-            // display confirmation 
-            //
             //
             // display header
             //
             ConsoleUtil.HeaderText = "Mission Setup";
             ConsoleUtil.DisplayReset();
 
+            //
+            // display intro
+            //
+            ConsoleUtil.DisplayMessage("You will now be prompted to enter the starting parameters of your mission.");
+            DisplayContinuePrompt();
+        }
+
+        /// <summary>
+        /// display a message confirming mission setup
+        /// </summary>
+        public void DisplayMissionSetupConfirmation()
+        {
+            //
+            // display header
+            //
+            ConsoleUtil.HeaderText = "Mission Setup";
+            ConsoleUtil.DisplayReset();
+            ConsoleUtil.HeaderText = "Mission Setup";
+            ConsoleUtil.DisplayReset();
+
+            //
+            // display confirmation
+            //
             ConsoleUtil.DisplayMessage("");
             ConsoleUtil.DisplayMessage("Your mission setup is complete.");
+            ConsoleUtil.DisplayMessage("");
+            ConsoleUtil.DisplayMessage("To view your TARDIS traveler information use the Main Menu.");
+
             DisplayContinuePrompt();
         }
 
@@ -179,7 +166,7 @@ namespace Project_TARDIS
         /// get player's name
         /// </summary>
         /// <returns>name as a string</returns>
-        private string DisplayGetPlayersName()
+        public string DisplayGetPlayersName()
         {
             string playersName;
 
@@ -258,10 +245,10 @@ namespace Project_TARDIS
         //
         // get and validate the player's TARDIS destination
         //
-        private SpaceTimeLocation DisplayGetPlayersNextLocation()
+        public SpaceTimeLocation DisplayGetPlayersNextLocation()
         {
             bool validResponse = false;
-            int locationNumber;
+            int locationID;
             SpaceTimeLocation nextSpaceTimeLocation = new SpaceTimeLocation();
 
             while (!validResponse)
@@ -281,38 +268,37 @@ namespace Project_TARDIS
                 // get and validate user's response for a space-time location
                 //
                 ConsoleUtil.DisplayPromptMessage("Choose the Space-Time destination by entering the location ID: ");
-                // user's response is an integer
-                if (int.TryParse(Console.ReadLine(), out locationNumber))
-                {
-                    // user's response is within the proper range
-                    if (locationNumber > 0 && locationNumber <= _gameUniverse.SpaceTimeLocations.Count())
-                    {
-                        //
-                        // run through the space-time location list and grab the correct one
-                        //
-                        foreach (SpaceTimeLocation location in _gameUniverse.SpaceTimeLocations)
-                        {
-                            if (location.SpaceTimeLocationID == locationNumber)
-                            {
-                                nextSpaceTimeLocation = location;
-                            }
-                        }
 
+                //
+                // user's response is an integer
+                //
+                if (int.TryParse(Console.ReadLine(), out locationID))
+                {
+                    ConsoleUtil.DisplayMessage("");
+
+                    try
+                    {
+                        nextSpaceTimeLocation = _gameUniverse.GetSpaceTimeLocationByID(locationID);
                         validResponse = true;
                         ConsoleUtil.DisplayReset();
                         ConsoleUtil.DisplayMessage($"You have indicated {nextSpaceTimeLocation.Name} as your TARDIS destination.");
                     }
+                    //
                     // user's response was not in the correct range
-                    else
+                    //
+                    catch (ArgumentOutOfRangeException ex)
                     {
-                        ConsoleUtil.DisplayPromptMessage("It appears you entered an invalid location ID.");
+                        ConsoleUtil.DisplayMessage("It appears you entered an invalid location ID.");
+                        ConsoleUtil.DisplayMessage(ex.Message);
                         ConsoleUtil.DisplayMessage("Please try again.");
                     }
                 }
+                //
                 // user's response was not an integer
+                //
                 else
                 {
-                    ConsoleUtil.DisplayPromptMessage("It appears you did not enter a number for the location ID.");
+                    ConsoleUtil.DisplayMessage("It appears you did not enter a number for the location ID.");
                     ConsoleUtil.DisplayMessage("Please try again.");
                 }
 
@@ -371,7 +357,7 @@ namespace Project_TARDIS
                     "\t" + "1. Initialize Your Mission" + Environment.NewLine +
                     "\t" + "2. Travel to a New Space-Time Location" + Environment.NewLine +
                     "\t" + "3. Display Space-Time Location Info" + Environment.NewLine +
-                    "\t" + "4. Display Player Info" + Environment.NewLine +
+                    "\t" + "4. Display Traveler Info" + Environment.NewLine +
                     "\t" + "E. Exit" + Environment.NewLine);
 
                 //
@@ -448,7 +434,7 @@ namespace Project_TARDIS
 
             DisplayContinuePrompt();
         }
-        
+
         /// <summary>
         /// display the current account information
         /// </summary>
@@ -461,7 +447,8 @@ namespace Project_TARDIS
             ConsoleUtil.DisplayMessage("");
             ConsoleUtil.DisplayMessage($"Player's Race: {_gamePlayer.Race}");
             ConsoleUtil.DisplayMessage("");
-            ConsoleUtil.DisplayMessage($"Player's Current Location: {_gamePlayer.Race}");
+            string spaceTimeLocationName = _gameUniverse.GetSpaceTimeLocationByID(_gamePlayer.SpaceTimeLocationID).Name;
+            ConsoleUtil.DisplayMessage($"Player's Current Location: {spaceTimeLocationName}");
 
             DisplayContinuePrompt();
         }

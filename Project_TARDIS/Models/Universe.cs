@@ -14,19 +14,37 @@ namespace Project_TARDIS
         {
             this.SpaceTimeLocations = new List<SpaceTimeLocation>();
         }
-        
+
         public SpaceTimeLocation GetSpaceTimeLocationByID(int ID)
         {
+            SpaceTimeLocation spt = new SpaceTimeLocation();
+
             //
-            // run through the space-time location list and grab the correct one
+            // validate the ID value is withing the range of location IDs
             //
-            foreach (SpaceTimeLocation location in SpaceTimeLocations)
+            if (ID > 0 && ID <= SpaceTimeLocations.Count())
             {
-                if (location.SpaceTimeLocationID == ID)
+                //
+                // run through the space-time location list and grab the correct one
+                //
+                foreach (SpaceTimeLocation location in SpaceTimeLocations)
                 {
-                    return location;
+                    if (location.SpaceTimeLocationID == ID)
+                    {
+                        spt = location;
+                    }
                 }
             }
+            //
+            // throw and out of range exception to be caught and handled by the calling method
+            //
+            else
+            {
+                string feedbackMessage = $"Space-Time Location IDs must be between 1 and {SpaceTimeLocations.Count()}.";
+                throw new ArgumentOutOfRangeException(ID.ToString(), feedbackMessage);
+            }
+
+            return spt;
         }
     }
 }
