@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project_TARDIS
 {
-    public class Player : Character
+    public class Traveler : Character
     {
         #region FIELDS
 
@@ -24,12 +24,12 @@ namespace Project_TARDIS
 
         #region CONSTRUCTORS
 
-        public Player()
+        public Traveler()
         {
 
         }
 
-        public Player(string name, RaceType race, int spaceTimeLocationID) : base(name, race, spaceTimeLocationID)
+        public Traveler(string name, RaceType race, int spaceTimeLocationID) : base(name, race, spaceTimeLocationID)
         {
 
         }

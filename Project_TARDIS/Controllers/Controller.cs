@@ -19,7 +19,7 @@ namespace Project_TARDIS
         //        are not accessed outside of the controller
         //
         private ConsoleView _gameConsoleView;
-        private Player _gamePlayer;
+        private Traveler _gamePlayer;
         private Universe _gameUniverse;
 
         #endregion
@@ -39,7 +39,7 @@ namespace Project_TARDIS
             //
             // instantiate a Salesperson object
             //
-            _gamePlayer = new Player();
+            _gamePlayer = new Traveler();
 
             //
             // instantiate a ConsoleView object
@@ -64,7 +64,7 @@ namespace Project_TARDIS
         {
             _usingGame = true;
             _gameUniverse = new Universe();
-            _gamePlayer = new Player();
+            _gamePlayer = new Traveler();
             _gameConsoleView = new ConsoleView(_gamePlayer, _gameUniverse);
 
             IntializeUniverse();
@@ -75,9 +75,11 @@ namespace Project_TARDIS
         /// </summary>
         private void ManageGameLoop()
         {
-            MenuOption userMenuChoice;
+            TravelerAction travelerActionChoice;
 
             _gameConsoleView.DisplayWelcomeScreen();
+
+            InitializeMission();
 
             //
             // game loop
@@ -88,35 +90,28 @@ namespace Project_TARDIS
                 //
                 // get a menu choice from the ConsoleView object
                 //
-                userMenuChoice = _gameConsoleView.DisplayGetUserMenuChoice();
+                travelerActionChoice = _gameConsoleView.DisplayGetTravelerActionChoice();
 
                 //
                 // choose an action based on the user's menu choice
                 //
-                switch (userMenuChoice)
+                switch (travelerActionChoice)
                 {
-                    case MenuOption.None:
+                    case TravelerAction.None:
                         break;
-                    case MenuOption.MissionSetup:
-                        if (!_missionInitialized)
-                        {
-                            _gameConsoleView.DisplayMissionSetupIntro();
-                            _gamePlayer.Name = _gameConsoleView.DisplayGetPlayersName();
-                            _gamePlayer.Race = _gameConsoleView.DisplayGetPlayersRace();
-                            _gamePlayer.SpaceTimeLocationID = _gameConsoleView.DisplayGetPlayersNextLocation().SpaceTimeLocationID;
-                        }
-
+                    case TravelerAction.LookAround:
+                        _gameConsoleView.DisplayLookAround();
                         break;
-                    case MenuOption.SpaceTimeTravel:
-                        _gameConsoleView.DisplayGetPlayersNextLocation();
+                    case TravelerAction.Travel:
+                        _gamePlayer.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
                         break;
-                    case MenuOption.SpaceTimeLocationInfo:
-                        _gameConsoleView.DisplaySpaceTimeLocations();
+                    case TravelerAction.ListTARDISDestinations:
+                        _gameConsoleView.DisplayListAllTARDISDestinations();
                         break;
-                    case MenuOption.PlayerInfo:
-                        _gameConsoleView.DisplayPlayerInfo();
+                    case TravelerAction.TravlerInfo:
+                        _gameConsoleView.DisplayTravelerInfo();
                         break;
-                    case MenuOption.Exit:
+                    case TravelerAction.Exit:
                         _usingGame = false;
                         break;
                     default:
@@ -130,6 +125,21 @@ namespace Project_TARDIS
             // close the application
             //
             Environment.Exit(1);
+        }
+
+        /// <summary>
+        /// initialize the traveler's starting mission  parameters
+        /// </summary>
+        private void InitializeMission()
+        {
+            if (!_missionInitialized)
+            {
+                _gameConsoleView.DisplayMissionSetupIntro();
+                _gamePlayer.Name = _gameConsoleView.DisplayGetTravelersName();
+                _gamePlayer.Race = _gameConsoleView.DisplayGetTravelersRace();
+                _gamePlayer.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
+                _missionInitialized = true;
+            }
         }
 
         /// <summary>
@@ -152,7 +162,7 @@ namespace Project_TARDIS
                 Description = "The Xantoria market, once controlled by the Thorian elite, is now an " +
                               "open market managed by the Xantorian Commerce Coop. It is a place " +
                               "where many races from various systems trade goods.",
-                Accessable = true
+                Accessable = false
             });
         }
 

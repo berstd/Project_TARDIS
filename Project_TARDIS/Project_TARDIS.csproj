@@ -45,8 +45,8 @@
   <ItemGroup>
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Models\Character.cs" />
-    <Compile Include="Models\MenuOption.cs" />
-    <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\TravelerAction.cs" />
+    <Compile Include="Models\Traveler.cs" />
     <Compile Include="Models\SpaceTimeLocation.cs" />
     <Compile Include="Models\Universe.cs" />
     <Compile Include="Program.cs" />

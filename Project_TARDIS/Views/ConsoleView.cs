@@ -14,10 +14,10 @@ namespace Project_TARDIS
         #region FIELDS
 
         //
-        // declare a Universe and Player object for the ConsoleView object to use
+        // declare a Universe and Traveler object for the ConsoleView object to use
         //
         Universe _gameUniverse;
-        Player _gamePlayer;
+        Traveler _gamePlayer;
 
         #endregion
 
@@ -30,7 +30,7 @@ namespace Project_TARDIS
         /// <summary>
         /// default constructor to create the console view objects
         /// </summary>
-        public ConsoleView(Player gamePlayer, Universe gameUniverse)
+        public ConsoleView(Traveler gamePlayer, Universe gameUniverse)
         {
             _gamePlayer = gamePlayer;
             _gameUniverse = gameUniverse;
@@ -47,7 +47,7 @@ namespace Project_TARDIS
         /// </summary>
         private void InitializeConsole()
         {
-            ConsoleUtil.WindowTitle = "Laughing Leaf Productions";
+            ConsoleUtil.WindowTitle = "The TARDIS Project";
             ConsoleUtil.HeaderText = "The TARDIS Project";
         }
 
@@ -73,6 +73,7 @@ namespace Project_TARDIS
         /// </summary>
         public void DisplayExitPrompt()
         {
+            ConsoleUtil.HeaderText = "Exit";
             ConsoleUtil.DisplayReset();
 
             Console.CursorVisible = false;
@@ -121,7 +122,7 @@ namespace Project_TARDIS
         }
 
         /// <summary>
-        /// setup the new Player object
+        /// setup the new Traveler object
         /// </summary>
         public void DisplayMissionSetupIntro()
         {
@@ -166,9 +167,9 @@ namespace Project_TARDIS
         /// get player's name
         /// </summary>
         /// <returns>name as a string</returns>
-        public string DisplayGetPlayersName()
+        public string DisplayGetTravelersName()
         {
-            string playersName;
+            string travelersName;
 
             //
             // display header
@@ -177,24 +178,24 @@ namespace Project_TARDIS
             ConsoleUtil.DisplayReset();
 
             ConsoleUtil.DisplayPromptMessage("Enter your name: ");
-            playersName = Console.ReadLine();
+            travelersName = Console.ReadLine();
 
             ConsoleUtil.DisplayReset();
-            ConsoleUtil.DisplayMessage($"You have indicated {playersName} as your name.");
+            ConsoleUtil.DisplayMessage($"You have indicated {travelersName} as your name.");
 
             DisplayContinuePrompt();
 
-            return playersName;
+            return travelersName;
         }
 
         /// <summary>
         /// get and validate the player's race
         /// </summary>
         /// <returns>race as a RaceType</returns>
-        public Player.RaceType DisplayGetPlayersRace()
+        public Traveler.RaceType DisplayGetTravelersRace()
         {
             bool validResponse = false;
-            Player.RaceType playersRace = Player.RaceType.None;
+            Traveler.RaceType travelersRace = Traveler.RaceType.None;
 
             while (!validResponse)
             {
@@ -224,11 +225,11 @@ namespace Project_TARDIS
                 //
                 // validate user response for race
                 //
-                if (Enum.TryParse<Character.RaceType>(Console.ReadLine(), out playersRace))
+                if (Enum.TryParse<Character.RaceType>(Console.ReadLine(), out travelersRace))
                 {
                     validResponse = true;
                     ConsoleUtil.DisplayReset();
-                    ConsoleUtil.DisplayMessage($"You have indicated {playersRace} as your race type.");
+                    ConsoleUtil.DisplayMessage($"You have indicated {travelersRace} as your race type.");
                 }
                 else
                 {
@@ -239,13 +240,13 @@ namespace Project_TARDIS
                 DisplayContinuePrompt();
             }
 
-            return playersRace;
+            return travelersRace;
         }
 
         //
         // get and validate the player's TARDIS destination
         //
-        public SpaceTimeLocation DisplayGetPlayersNextLocation()
+        public SpaceTimeLocation DisplayGetTravelersNewDestination()
         {
             bool validResponse = false;
             int locationID;
@@ -262,12 +263,12 @@ namespace Project_TARDIS
                 //
                 // display a table of space-time locations
                 //
-                DisplaySpaceTimeLocationTable();
+                DisplayTARDISDestinationsTable();
 
                 //
                 // get and validate user's response for a space-time location
                 //
-                ConsoleUtil.DisplayPromptMessage("Choose the Space-Time destination by entering the location ID: ");
+                ConsoleUtil.DisplayPromptMessage("Choose the TARDIS destination by entering the ID: ");
 
                 //
                 // user's response is an integer
@@ -279,9 +280,21 @@ namespace Project_TARDIS
                     try
                     {
                         nextSpaceTimeLocation = _gameUniverse.GetSpaceTimeLocationByID(locationID);
-                        validResponse = true;
+
                         ConsoleUtil.DisplayReset();
                         ConsoleUtil.DisplayMessage($"You have indicated {nextSpaceTimeLocation.Name} as your TARDIS destination.");
+                        ConsoleUtil.DisplayMessage("");
+
+                        if (nextSpaceTimeLocation.Accessable == true)
+                        {
+                            validResponse = true;
+                            ConsoleUtil.DisplayMessage("You will be transported immediately.");
+                        }
+                        else
+                        {
+                            ConsoleUtil.DisplayMessage("It appears this destination is not available to you at this time.");
+                            ConsoleUtil.DisplayMessage("Please make another choice.");
+                        }
                     }
                     //
                     // user's response was not in the correct range
@@ -311,7 +324,7 @@ namespace Project_TARDIS
         /// <summary>
         /// generate a table of space-time location names and ids
         /// </summary>
-        public void DisplaySpaceTimeLocationTable()
+        public void DisplayTARDISDestinationsTable()
         {
             int locationNumber = 1;
 
@@ -333,11 +346,11 @@ namespace Project_TARDIS
         }
 
         /// <summary>
-        /// get the menu choice from the user
+        /// get the action choice from the user
         /// </summary>
-        public MenuOption DisplayGetUserMenuChoice()
+        public TravelerAction DisplayGetTravelerActionChoice()
         {
-            MenuOption userMenuChoice = MenuOption.None;
+            TravelerAction travelerActionChoice = TravelerAction.None;
             bool usingMenu = true;
 
             while (usingMenu)
@@ -345,18 +358,19 @@ namespace Project_TARDIS
                 //
                 // set up display area
                 //
+                ConsoleUtil.HeaderText = "Traveler Action Choice";
                 ConsoleUtil.DisplayReset();
                 Console.CursorVisible = false;
 
                 //
                 // display the menu
                 //
-                ConsoleUtil.DisplayMessage("Please type the number of your menu choice.");
+                ConsoleUtil.DisplayMessage("What would you like to do (Type Number).");
                 Console.WriteLine();
                 Console.WriteLine(
-                    "\t" + "1. Initialize Your Mission" + Environment.NewLine +
-                    "\t" + "2. Travel to a New Space-Time Location" + Environment.NewLine +
-                    "\t" + "3. Display Space-Time Location Info" + Environment.NewLine +
+                    "\t" + "1. Look Around" + Environment.NewLine +
+                    "\t" + "2. Travel" + Environment.NewLine +
+                    "\t" + "3. Display All TARDIS Destinations" + Environment.NewLine +
                     "\t" + "4. Display Traveler Info" + Environment.NewLine +
                     "\t" + "E. Exit" + Environment.NewLine);
 
@@ -368,24 +382,24 @@ namespace Project_TARDIS
                 switch (userResponse.KeyChar)
                 {
                     case '1':
-                        userMenuChoice = MenuOption.MissionSetup;
+                        travelerActionChoice = TravelerAction.LookAround;
                         usingMenu = false;
                         break;
                     case '2':
-                        userMenuChoice = MenuOption.SpaceTimeTravel;
+                        travelerActionChoice = TravelerAction.Travel;
                         usingMenu = false;
                         break;
                     case '3':
-                        userMenuChoice = MenuOption.SpaceTimeLocationInfo;
+                        travelerActionChoice = TravelerAction.ListTARDISDestinations;
                         usingMenu = false;
                         break;
                     case '4':
-                        userMenuChoice = MenuOption.PlayerInfo;
+                        travelerActionChoice = TravelerAction.TravlerInfo;
                         usingMenu = false;
                         break;
                     case 'E':
                     case 'e':
-                        userMenuChoice = MenuOption.Exit;
+                        travelerActionChoice = TravelerAction.Exit;
                         usingMenu = false;
                         break;
                     default:
@@ -403,52 +417,58 @@ namespace Project_TARDIS
             }
             Console.CursorVisible = true;
 
-            return userMenuChoice;
+            return travelerActionChoice;
         }
 
         /// <summary>
-        /// 
+        /// display information about the current space-time location
         /// </summary>
-        /// <returns>string City</returns>
-        public string DisplayTravelToSpaceTimeLocation()
+        public void DisplayLookAround()
         {
-            string nextCity = "";
-
+            ConsoleUtil.HeaderText = "Current Space-Time Location Info";
             ConsoleUtil.DisplayReset();
 
-            ConsoleUtil.DisplayPromptMessage("Enter the name of the next city:");
-            nextCity = Console.ReadLine();
-
-            return nextCity;
-        }
-
-        /// <summary>
-        ///
-        /// <summary>
-        /// display all space-time locations
-        /// </summary>
-        public void DisplaySpaceTimeLocations()
-        {
-            ConsoleUtil.HeaderText = "Space-Time Locations";
-            ConsoleUtil.DisplayReset();
+            ConsoleUtil.DisplayMessage(_gameUniverse.GetSpaceTimeLocationByID(_gamePlayer.SpaceTimeLocationID).Description);
 
             DisplayContinuePrompt();
         }
 
         /// <summary>
-        /// display the current account information
+        /// display a list of all TARDIS destinations
+        /// <summary>
+        /// display all space-time locations
         /// </summary>
-        public void DisplayPlayerInfo()
+        public void DisplayListAllTARDISDestinations()
         {
-            ConsoleUtil.HeaderText = "Player Info";
+            ConsoleUtil.HeaderText = "Space-Time Locations";
             ConsoleUtil.DisplayReset();
 
-            ConsoleUtil.DisplayMessage($"Player's Name: {_gamePlayer.Name}");
+            foreach (SpaceTimeLocation location in _gameUniverse.SpaceTimeLocations)
+            {
+                ConsoleUtil.DisplayMessage("ID: " + location.SpaceTimeLocationID);
+                ConsoleUtil.DisplayMessage("Name: " + location.Name);
+                ConsoleUtil.DisplayMessage("Description: " + location.Description);
+                ConsoleUtil.DisplayMessage("Accessible: " + location.Accessable);
+                ConsoleUtil.DisplayMessage("");
+            }
+
+            DisplayContinuePrompt();
+        }
+
+        /// <summary>
+        /// display the current traveler information
+        /// </summary>
+        public void DisplayTravelerInfo()
+        {
+            ConsoleUtil.HeaderText = "Traveler Info";
+            ConsoleUtil.DisplayReset();
+
+            ConsoleUtil.DisplayMessage($"Traveler's Name: {_gamePlayer.Name}");
             ConsoleUtil.DisplayMessage("");
-            ConsoleUtil.DisplayMessage($"Player's Race: {_gamePlayer.Race}");
+            ConsoleUtil.DisplayMessage($"Traveler's Race: {_gamePlayer.Race}");
             ConsoleUtil.DisplayMessage("");
             string spaceTimeLocationName = _gameUniverse.GetSpaceTimeLocationByID(_gamePlayer.SpaceTimeLocationID).Name;
-            ConsoleUtil.DisplayMessage($"Player's Current Location: {spaceTimeLocationName}");
+            ConsoleUtil.DisplayMessage($"Traveler's Current Location: {spaceTimeLocationName}");
 
             DisplayContinuePrompt();
         }
