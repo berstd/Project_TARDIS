@@ -155,6 +155,7 @@ namespace Project_TARDIS
                               " beneath a nondescript 7-11 on the south-side of Toledo, OH.",
                 Accessable = true
             });
+
             _gameUniverse.SpaceTimeLocations.Add(new SpaceTimeLocation
             {
                 Name = "Xantoria Market",
@@ -163,6 +164,16 @@ namespace Project_TARDIS
                               "open market managed by the Xantorian Commerce Coop. It is a place " +
                               "where many races from various systems trade goods.",
                 Accessable = false
+            });
+
+            _gameUniverse.SpaceTimeLocations.Add(new SpaceTimeLocation
+            {
+                Name = "Felandrian Plains",
+                SpaceTimeLocationID = 3,
+                Description = "The Felandrian Plains are a common destination for tourist. " +
+                  "Located just north of the equatorial line on the planet of Corlon, they" +
+                  "provide excellent habitat for a rich ecosystem of flora and fauna.",
+                Accessable = true
             });
         }
 

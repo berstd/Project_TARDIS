@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_TARDIS", "Project_TARDIS\Project_TARDIS.csproj", "{8D79437F-4EB1-4FA2-AAAF-E972E2094002}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_TARDIS.S1_Solution", "Project_TARDIS\Project_TARDIS.S1_Solution.csproj", "{8D79437F-4EB1-4FA2-AAAF-E972E2094002}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
