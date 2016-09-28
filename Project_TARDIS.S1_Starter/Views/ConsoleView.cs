@@ -30,8 +30,12 @@ namespace Project_TARDIS
         /// default constructor to create the console view objects
         /// </summary>
         public ConsoleView(Traveler gamePlayer, Universe gameUniverse)
-        {
+        {   
+            //
+            // initialize class fields
+            //
             
+                     
             InitializeConsole();
         }
 
@@ -99,9 +103,6 @@ namespace Project_TARDIS
             ConsoleUtil.DisplayMessage("- Insert Info -");
             Console.WriteLine();
 
-            //
-            // TODO update opening screen
-            //
 
             sb.Clear();
             sb.AppendFormat("- line 1 -");
@@ -128,10 +129,6 @@ namespace Project_TARDIS
             ConsoleUtil.HeaderText = "Mission Setup";
             ConsoleUtil.DisplayReset();
 
-            //
-            // TODO Update Mission Setup Intro for theme
-            //
-
 
             ConsoleUtil.DisplayMessage("You will now be prompted to enter the starting parameters of your mission.");
             DisplayContinuePrompt();
@@ -150,10 +147,6 @@ namespace Project_TARDIS
 
             //
             // display confirmation
-            //
-
-            //
-            // TODO Update Mission Complete for theme
             //
 
             ConsoleUtil.DisplayMessage("");
@@ -178,9 +171,6 @@ namespace Project_TARDIS
             ConsoleUtil.HeaderText = "Traveler's Name";
             ConsoleUtil.DisplayReset();
 
-            //
-            // TODO get traveler's name and echo it
-            //
 
             DisplayContinuePrompt();
 
@@ -193,10 +183,6 @@ namespace Project_TARDIS
         /// <returns>race as a RaceType</returns>
         public Traveler.RaceType DisplayGetTravelersRace()
         {
-            //
-            // TODO get traveler's race and echo it
-            //
-
             bool validResponse = false;
             Traveler.RaceType travelersRace = Traveler.RaceType.None;
 
@@ -393,9 +379,6 @@ namespace Project_TARDIS
             ConsoleUtil.HeaderText = "Current Space-Time Location Info";
             ConsoleUtil.DisplayReset();
 
-            //
-            // TODO Update DisplayLookAround()
-            //
 
             DisplayContinuePrompt();
         }
@@ -410,9 +393,6 @@ namespace Project_TARDIS
             ConsoleUtil.HeaderText = "Space-Time Locations";
             ConsoleUtil.DisplayReset();
 
-            //
-            // TODO Update DisplayListAllTARDISDestinations()
-            //
 
             DisplayContinuePrompt();
         }
@@ -425,9 +405,7 @@ namespace Project_TARDIS
             ConsoleUtil.HeaderText = "Traveler Info";
             ConsoleUtil.DisplayReset();
 
-            //
-            // TODO update DisplayTravelerInfo()
-            //
+
 
             DisplayContinuePrompt();
         }
