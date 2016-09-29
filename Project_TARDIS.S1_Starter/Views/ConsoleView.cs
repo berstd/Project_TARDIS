@@ -215,9 +215,10 @@ namespace Project_TARDIS
             return travelersRace;
         }
 
-        //
-        // get and validate the player's TARDIS destination
-        //
+        /// <summary>
+        /// get and validate the player's TARDIS destination
+        /// </summary>
+        /// <returns>Space-Time Location object</returns>
         public SpaceTimeLocation DisplayGetTravelersNewDestination()
         {
             bool validResponse = false;
@@ -385,8 +386,6 @@ namespace Project_TARDIS
 
         /// <summary>
         /// display a list of all TARDIS destinations
-        /// <summary>
-        /// display all space-time locations
         /// </summary>
         public void DisplayListAllTARDISDestinations()
         {

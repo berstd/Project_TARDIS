@@ -10,7 +10,7 @@ namespace Project_TARDIS
     {
         static void Main(string[] args)
         {
-            Controller _gameController = new Controller();
+
         }
     }
 }
