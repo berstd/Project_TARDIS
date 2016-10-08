@@ -6,55 +6,312 @@ using System.Threading.Tasks;
 
 namespace Project_TARDIS
 {
+    /// <summary>
+    /// the Universe class manages all of the game elements
+    /// </summary>
     public class Universe
     {
-        private int currentMaxSpaceTimeLocationID;
-        private int currentMaxSpaceTimeObjectID;
+        #region ***** define all lists to be maintained by the Universe object *****
 
+        //
+        // list of all space-time locations
+        //
         public List<SpaceTimeLocation> SpaceTimeLocations { get; set; }
 
-        public List<SpaceTimeObject> SpaceTimeObjects { get; set; }
+        //
+        // list of all items
+        //
+        public List<Item> Items { get; set; }
 
+
+        //
+        // list of all treasure
+        //
+        public List<Treasure> Treasures { get; set; }
+
+        #endregion
+
+        #region ***** constructor *****
+
+        //
+        // default Universe constructor
+        //
         public Universe()
         {
+            //
+            // instantiate the lists of space-time locations and game objects
+            //
             this.SpaceTimeLocations = new List<SpaceTimeLocation>();
-            this.currentMaxSpaceTimeLocationID = 1;
+            this.Items = new List<Item>();
+            this.Treasures = new List<Treasure>();
 
-            this.SpaceTimeObjects = new List<SpaceTimeObject>();
-            this.currentMaxSpaceTimeObjectID = 1;
+            //
+            // add all of the space-time locations and game objects to their lists
+            // 
+            IntializeUniverseSpaceTimeLocations();
         }
 
+        #endregion
+
+        #region ***** define methods to get the next available ID for game elements *****
+
+        /// <summary>
+        /// return the next available ID for a SpaceTimeLocation object
+        /// </summary>
+        /// <returns>next SpaceTimeLocationObjectID </returns>
+        private int GetNextSpaceTimeLocationID()
+        {
+            int MaxID = 0;
+
+            foreach (SpaceTimeLocation STLocation in SpaceTimeLocations)
+            {
+                if (STLocation.SpaceTimeLocationID > MaxID)
+                {
+                    MaxID = STLocation.SpaceTimeLocationID;
+                }
+            }
+
+            return MaxID + 1;
+        }
+
+        /// <summary>
+        /// return the next available ID for an item
+        /// </summary>
+        /// <returns>next GameObjectID </returns>
+        private int GetNextItemID()
+        {
+            int MaxID = 0;
+
+            foreach (Item item in Items)
+            {
+                if (item.GameObjectID > MaxID)
+                {
+                    MaxID = item.GameObjectID;
+                }
+            }
+
+            return MaxID + 1;
+        }
+
+        /// <summary>
+        /// return the next available ID for a treasure
+        /// </summary>
+        /// <returns>next GameObjectID </returns>
+        private int GetNexTreasureID()
+        {
+            int MaxID = 0;
+
+            foreach (Treasure treasure in Treasures)
+            {
+                if (treasure.GameObjectID > MaxID)
+                {
+                    MaxID = treasure.GameObjectID;
+                }
+            }
+
+            return MaxID + 1;
+        }
+
+        #endregion
+
+        #region ***** define methods to return game element objects *****
+
+        /// <summary>
+        /// get a SpaceTimeLocation object using an ID
+        /// </summary>
+        /// <param name="ID">space-time location ID</param>
+        /// <returns>requested space-time location</returns>
         public SpaceTimeLocation GetSpaceTimeLocationByID(int ID)
         {
             SpaceTimeLocation spt = new SpaceTimeLocation();
 
             //
-            // validate the ID value is withing the range of location IDs
+            // run through the space-time location list and grab the correct one
             //
-            if (ID > 0 && ID <= SpaceTimeLocations.Count())
+            foreach (SpaceTimeLocation location in SpaceTimeLocations)
             {
-                //
-                // run through the space-time location list and grab the correct one
-                //
-                foreach (SpaceTimeLocation location in SpaceTimeLocations)
+                if (location.SpaceTimeLocationID == ID)
                 {
-                    if (location.SpaceTimeLocationID == ID)
-                    {
-                        spt = location;
-                    }
+                    spt = location;
                 }
             }
+
             //
-            // throw and out of range exception to be caught and handled by the calling method
+            // the specified ID was not found in the universe
+            // throw and exception
             //
-            else
+            if (spt == null)
             {
-                string feedbackMessage = $"Space-Time Location IDs must be between 1 and {SpaceTimeLocations.Count()}.";
-                throw new ArgumentOutOfRangeException(ID.ToString(), feedbackMessage);
+                string feedbackMessage = $"The Space-Time Location ID {ID} does not exist in the current Universe.";
+                throw new ArgumentException(ID.ToString(), feedbackMessage);
             }
 
             return spt;
         }
+
+        /// <summary>
+        /// get an item using an ID
+        /// </summary>
+        /// <param name="ID">game object ID</param>
+        /// <returns>requested item object</returns>
+        public Item GetItemtByID(int ID)
+        {
+            Item requestedItem = new Item();
+
+            //
+            // run through the item list and grab the correct one
+            //
+            foreach (Item item in Items)
+            {
+                if (item.GameObjectID == ID)
+                {
+                    requestedItem = item;
+                }
+            }
+
+            //
+            // the specified ID was not found in the universe
+            // throw and exception
+            //
+            if (requestedItem == null)
+            {
+                string feedbackMessage = $"The item ID {ID} does not exist in the current Universe.";
+                throw new ArgumentException(ID.ToString(), feedbackMessage);
+            }
+
+            return requestedItem;
+        }
+
+        /// <summary>
+        /// get a treasure using an ID
+        /// </summary>
+        /// <param name="ID">game object ID</param>
+        /// <returns>requested treasure object</returns>
+        public Treasure GetTreasuretByID(int ID)
+        {
+            Treasure requestedTreasure = new Treasure();
+
+            //
+            // run through the item list and grab the correct one
+            //
+            foreach (Treasure treasure in Treasures)
+            {
+                if (treasure.GameObjectID == ID)
+                {
+                    requestedTreasure = treasure;
+                }
+            }
+
+            //
+            // the specified ID was not found in the universe
+            // throw and exception
+            //
+            if (requestedTreasure == null)
+            {
+                string feedbackMessage = $"The item ID {ID} does not exist in the current Universe.";
+                throw new ArgumentException(ID.ToString(), feedbackMessage);
+            }
+
+            return requestedTreasure;
+        }
+
+        #endregion
+
+        #region ***** define methods to initialize all game elements *****
+
+        /// <summary>
+        /// initialize the universe with all of the space-time locations
+        /// </summary>
+        private void IntializeUniverseSpaceTimeLocations()
+        {
+            SpaceTimeLocations.Add(new SpaceTimeLocation
+            {
+                Name = "TARDIS Base",
+                SpaceTimeLocationID = 1,
+                Description = "The Norlon Corporation's secret laboratory located deep underground, " +
+                              " beneath a nondescript 7-11 on the south-side of Toledo, OH.",
+                Accessable = true
+            });
+
+            SpaceTimeLocations.Add(new SpaceTimeLocation
+            {
+                Name = "Xantoria Market",
+                SpaceTimeLocationID = 2,
+                Description = "The Xantoria market, once controlled by the Thorian elite, is now an " +
+                              "open market managed by the Xantorian Commerce Coop. It is a place " +
+                              "where many races from various systems trade goods.",
+                Accessable = false
+            });
+
+            SpaceTimeLocations.Add(new SpaceTimeLocation
+            {
+                Name = "Felandrian Plains",
+                SpaceTimeLocationID = 3,
+                Description = "The Felandrian Plains are a common destination for tourist. " +
+                  "Located just north of the equatorial line on the planet of Corlon, they" +
+                  "provide excellent habitat for a rich ecosystem of flora and fauna.",
+                Accessable = true
+            });
+        }
+
+        /// <summary>
+        /// initialize the universe with all of the items
+        /// </summary>
+        private void IntializeUniverseItems()
+        {
+            Items.Add(new Item
+            {
+                Name = "Key",
+                GameObjectID = 1,
+                Description = "A gold encrusted chest with strange markings lay next to a strange blue rock.",
+                SpaceTimeLocationID = 3,
+                HasValue = false,
+                Value = 0,
+                CanAddToInventory = true
+            });
+
+            Items.Add(new Item
+            {
+                Name = "Mirror",
+                GameObjectID = 2,
+                Description = "A full sized mirror with jewels decorating the border.",
+                SpaceTimeLocationID = 2,
+                HasValue = false,
+                Value = 0,
+                CanAddToInventory = false
+            });
+        }
+
+        /// <summary>
+        /// initialize the universe with all of the treasures
+        /// </summary>
+        private void IntializeUniverseTreasures()
+        {
+            Treasures.Add(new Treasure
+            {
+                Name = "Ruby",
+                GameObjectID = 1,
+                Description = "A deep red ruby the size of an egg.",
+                SpaceTimeLocationID = 2,
+                HasValue = true,
+                Value = 15,
+                CanAddToInventory = true
+            });
+
+            Treasures.Add(new Treasure
+            {
+                Name = "Lode Stone",
+                GameObjectID = 1,
+                Description = "A deep red ruby the size of an egg.",
+                SpaceTimeLocationID = 2,
+                HasValue = true,
+                Value = 15,
+                CanAddToInventory = true
+            });
+        }
+
+        #endregion
+
     }
 }
 

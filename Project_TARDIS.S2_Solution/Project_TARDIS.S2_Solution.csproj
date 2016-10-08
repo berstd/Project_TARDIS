@@ -46,9 +46,9 @@
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\GallifrianMirror.cs" />
-    <Compile Include="Models\SpaceTimeObject.cs" />
-    <Compile Include="Models\Jewel.cs" />
-    <Compile Include="Models\Furniture.cs" />
+    <Compile Include="Models\GameObject.cs" />
+    <Compile Include="Models\Treasure.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\SpaceTimeLocation.cs" />
     <Compile Include="Models\Traveler.cs" />
     <Compile Include="Models\TravelerAction.cs" />

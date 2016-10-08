@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project_TARDIS
 {
-    public abstract class SpaceTimeObject
+    public abstract class GameObject
     {
         #region FIELDS
 
@@ -20,20 +20,23 @@ namespace Project_TARDIS
 
         public abstract string Description { get; set; }
 
-        public abstract int TimeSpaceLocationID { get; set; }
+        public abstract int SpaceTimeLocationID { get; set; }
 
         public abstract bool HasValue { get; set; }
 
+        public abstract int Value { get; set; }
+
         public abstract bool CanAddToInventory { get; set; }
+
+        public virtual bool InInventory { get; set; }
 
         #endregion
 
 
         #region CONSTRUCTORS
 
-        public SpaceTimeObject() { }
+        public GameObject() { }
 
- 
         #endregion
 
 
@@ -45,7 +48,7 @@ namespace Project_TARDIS
 
             return gameObjectMessage;
         }
-        
+
         #endregion
 
 

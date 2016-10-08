@@ -6,14 +6,20 @@ using System.Threading.Tasks;
 
 namespace Project_TARDIS
 {
-    public class Jewel : SpaceTimeObject
+    /// <summary>
+    /// define all treasure objects
+    /// </summary>
+    public class Treasure : GameObject
     {
         public enum Type
         {
             Diamond,
             Ruby,
             Emerald,
-            LodeStone
+            LodeStone,
+            GoldCoin,
+            SilverCoin,
+            BronzeCoin
         }
 
         public override int GameObjectID { get; set; }
@@ -22,12 +28,13 @@ namespace Project_TARDIS
 
         public override string Description { get; set; }
 
-        public override int TimeSpaceLocationID { get; set; }
+        public override int SpaceTimeLocationID { get; set; }
 
         public override bool HasValue { get; set; }
 
-        public int Value { get; set; }
+        public override int Value { get; set; }
 
         public override bool CanAddToInventory { get; set; }
+
     }
 }

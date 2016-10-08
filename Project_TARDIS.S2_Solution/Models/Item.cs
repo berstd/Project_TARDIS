@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project_TARDIS
 {
-    public class Furniture : SpaceTimeObject
+    public class Item : GameObject
     {
         public override int GameObjectID { get; set; }
 
@@ -14,15 +14,12 @@ namespace Project_TARDIS
 
         public override string Description { get; set; }
 
-        public override int TimeSpaceLocationID { get; set; }
+        public override int SpaceTimeLocationID { get; set; }
 
         public override bool HasValue { get; set; }
 
-        public override bool CanAddToInventory { get; set; }
+        public override int Value { get; set; }
 
-        public override string SpaceTimeTransporterMessage()
-        {
-            return base.SpaceTimeTransporterMessage();
-        }
+        public override bool CanAddToInventory { get; set; }
     }
 }
