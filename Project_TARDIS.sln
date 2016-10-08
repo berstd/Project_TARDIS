@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_TARDIS.S1_Solution"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_TARDIS.S1_Starter", "Project_TARDIS.S1_Starter\Project_TARDIS.S1_Starter.csproj", "{E1C7BE82-7D7D-4EA2-823C-6923A410F467}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_TARDIS.S2_Solution", "Project_TARDIS.S2_Solution\Project_TARDIS.S2_Solution.csproj", "{D0724317-6E8C-4AB7-96CB-5309B3A0CA04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{E1C7BE82-7D7D-4EA2-823C-6923A410F467}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1C7BE82-7D7D-4EA2-823C-6923A410F467}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1C7BE82-7D7D-4EA2-823C-6923A410F467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0724317-6E8C-4AB7-96CB-5309B3A0CA04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0724317-6E8C-4AB7-96CB-5309B3A0CA04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0724317-6E8C-4AB7-96CB-5309B3A0CA04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0724317-6E8C-4AB7-96CB-5309B3A0CA04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
