@@ -16,7 +16,7 @@ namespace Project_TARDIS
             Diamond,
             Ruby,
             Emerald,
-            LodeStone,
+            Lodestone,
             GoldCoin,
             SilverCoin,
             BronzeCoin
@@ -25,6 +25,8 @@ namespace Project_TARDIS
         public override int GameObjectID { get; set; }
 
         public override string Name { get; set; }
+
+        public Type TreasureType { get; set; }
 
         public override string Description { get; set; }
 

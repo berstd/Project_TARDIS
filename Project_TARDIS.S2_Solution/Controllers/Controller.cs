@@ -19,7 +19,7 @@ namespace Project_TARDIS
         //        are not accessed outside of the controller
         //
         private ConsoleView _gameConsoleView;
-        private Traveler _gamePlayer;
+        private Traveler _gameTraveler;
         private Universe _gameUniverse;
 
         #endregion
@@ -39,12 +39,12 @@ namespace Project_TARDIS
             //
             // instantiate a Salesperson object
             //
-            _gamePlayer = new Traveler();
+            _gameTraveler = new Traveler();
 
             //
             // instantiate a ConsoleView object
             //
-            _gameConsoleView = new ConsoleView(_gamePlayer, _gameUniverse);
+            _gameConsoleView = new ConsoleView(_gameTraveler, _gameUniverse);
 
             //
             // begins running the application UI
@@ -64,8 +64,8 @@ namespace Project_TARDIS
         {
             _usingGame = true;
             _gameUniverse = new Universe();
-            _gamePlayer = new Traveler();
-            _gameConsoleView = new ConsoleView(_gamePlayer, _gameUniverse);
+            _gameTraveler = new Traveler();
+            _gameConsoleView = new ConsoleView(_gameTraveler, _gameUniverse);
 
         }
 
@@ -102,7 +102,7 @@ namespace Project_TARDIS
                         _gameConsoleView.DisplayLookAround();
                         break;
                     case TravelerAction.Travel:
-                        _gamePlayer.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
+                        _gameTraveler.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
                         break;
                     case TravelerAction.ListTARDISDestinations:
                         _gameConsoleView.DisplayListAllTARDISDestinations();
@@ -134,9 +134,9 @@ namespace Project_TARDIS
             if (!_missionInitialized)
             {
                 _gameConsoleView.DisplayMissionSetupIntro();
-                _gamePlayer.Name = _gameConsoleView.DisplayGetTravelersName();
-                _gamePlayer.Race = _gameConsoleView.DisplayGetTravelersRace();
-                _gamePlayer.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
+                _gameTraveler.Name = _gameConsoleView.DisplayGetTravelersName();
+                _gameTraveler.Race = _gameConsoleView.DisplayGetTravelersRace();
+                _gameTraveler.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
                 _missionInitialized = true;
             }
         }

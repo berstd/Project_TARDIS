@@ -49,6 +49,8 @@ namespace Project_TARDIS
             // add all of the space-time locations and game objects to their lists
             // 
             IntializeUniverseSpaceTimeLocations();
+            IntializeUniverseItems();
+            IntializeUniverseTreasures();
         }
 
         #endregion
@@ -199,7 +201,7 @@ namespace Project_TARDIS
                 if (treasure.GameObjectID == ID)
                 {
                     requestedTreasure = treasure;
-                }
+                };
             }
 
             //
@@ -213,6 +215,61 @@ namespace Project_TARDIS
             }
 
             return requestedTreasure;
+        }
+
+        #endregion
+
+        #region ***** define methods to get lists of game elements by location *****
+
+
+        /// get a list of items using a space-time location ID
+        /// </summary>
+        /// <param name="ID">space-time location ID</param>
+        /// <returns>list of items in the specified location</returns>
+        public List<Item> GetItemtsBySpaceTimeLocationID(int ID)
+        {
+            // TODO validate SpaceTimeLocationID
+
+            List<Item> itemsInSpaceTimeLocation = new List<Item>();
+
+            //
+            // run through the item list and put all items in the current location
+            // into a list
+            //
+            foreach (Item item in Items)
+            {
+                if (item.SpaceTimeLocationID == ID)
+                {
+                    itemsInSpaceTimeLocation.Add(item);
+                }
+            }
+
+            return itemsInSpaceTimeLocation;
+        }
+
+        /// get a list of treasures using a space-time location ID
+        /// </summary>
+        /// <param name="ID">space-time location ID</param>
+        /// <returns>list of treasures in the specified location</returns>
+        public List<Treasure> GetTreasuressBySpaceTimeLocationID(int ID)
+        {
+            // TODO validate SpaceTimeLocationID
+
+            List<Treasure> treasuresInSpaceTimeLocation = new List<Treasure>();
+
+            //
+            // run through the treasure list and put all items in the current location
+            // into a list
+            //
+            foreach (Treasure treasure in Treasures)
+            {
+                if (treasure.SpaceTimeLocationID == ID)
+                {
+                    treasuresInSpaceTimeLocation.Add(treasure);
+                }
+            }
+
+            return treasuresInSpaceTimeLocation;
         }
 
         #endregion
@@ -240,7 +297,7 @@ namespace Project_TARDIS
                 Description = "The Xantoria market, once controlled by the Thorian elite, is now an " +
                               "open market managed by the Xantorian Commerce Coop. It is a place " +
                               "where many races from various systems trade goods.",
-                Accessable = false
+                Accessable = true
             });
 
             SpaceTimeLocations.Add(new SpaceTimeLocation
@@ -289,7 +346,8 @@ namespace Project_TARDIS
         {
             Treasures.Add(new Treasure
             {
-                Name = "Ruby",
+                Name = "Trantorian Ruby",
+                TreasureType = Treasure.Type.Ruby,
                 GameObjectID = 1,
                 Description = "A deep red ruby the size of an egg.",
                 SpaceTimeLocationID = 2,
@@ -300,7 +358,8 @@ namespace Project_TARDIS
 
             Treasures.Add(new Treasure
             {
-                Name = "Lode Stone",
+                Name = "Lodestone",
+                TreasureType = Treasure.Type.Lodestone,
                 GameObjectID = 1,
                 Description = "A deep red ruby the size of an egg.",
                 SpaceTimeLocationID = 2,

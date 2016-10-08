@@ -17,7 +17,7 @@ namespace Project_TARDIS
         // declare a Universe and Traveler object for the ConsoleView object to use
         //
         Universe _gameUniverse;
-        Traveler _gamePlayer;
+        Traveler _gameTraveler;
 
         #endregion
 
@@ -30,9 +30,9 @@ namespace Project_TARDIS
         /// <summary>
         /// default constructor to create the console view objects
         /// </summary>
-        public ConsoleView(Traveler gamePlayer, Universe gameUniverse)
+        public ConsoleView(Traveler gameTraveler, Universe gameUniverse)
         {
-            _gamePlayer = gamePlayer;
+            _gameTraveler = gameTraveler;
             _gameUniverse = gameUniverse;
 
             InitializeConsole();
@@ -85,8 +85,7 @@ namespace Project_TARDIS
 
             System.Environment.Exit(1);
         }
-
-
+        
         /// <summary>
         /// display the welcome screen
         /// </summary>
@@ -243,9 +242,10 @@ namespace Project_TARDIS
             return travelersRace;
         }
 
-        //
-        // get and validate the player's TARDIS destination
-        //
+        /// <summary>
+        /// get and validate the player's TARDIS destination
+        /// </summary>
+        /// <returns>space-time location</returns>
         public SpaceTimeLocation DisplayGetTravelersNewDestination()
         {
             bool validResponse = false;
@@ -428,7 +428,21 @@ namespace Project_TARDIS
             ConsoleUtil.HeaderText = "Current Space-Time Location Info";
             ConsoleUtil.DisplayReset();
 
-            ConsoleUtil.DisplayMessage(_gameUniverse.GetSpaceTimeLocationByID(_gamePlayer.SpaceTimeLocationID).Description);
+            ConsoleUtil.DisplayMessage(_gameUniverse.GetSpaceTimeLocationByID(_gameTraveler.SpaceTimeLocationID).Description);
+
+            ConsoleUtil.DisplayMessage("");
+            ConsoleUtil.DisplayMessage("Items in current location.");
+            foreach (Item item in _gameUniverse.GetItemtsBySpaceTimeLocationID(_gameTraveler.SpaceTimeLocationID))
+            {
+                ConsoleUtil.DisplayMessage(item.Name + " - " + item.Description);
+            }
+
+            ConsoleUtil.DisplayMessage("");
+            ConsoleUtil.DisplayMessage("Treasures in current location.");
+            foreach (Treasure treasure in _gameUniverse.GetTreasuressBySpaceTimeLocationID(_gameTraveler.SpaceTimeLocationID))
+            {
+                ConsoleUtil.DisplayMessage(treasure.Name + " - " + treasure.Description);
+            }
 
             DisplayContinuePrompt();
         }
@@ -463,11 +477,11 @@ namespace Project_TARDIS
             ConsoleUtil.HeaderText = "Traveler Info";
             ConsoleUtil.DisplayReset();
 
-            ConsoleUtil.DisplayMessage($"Traveler's Name: {_gamePlayer.Name}");
+            ConsoleUtil.DisplayMessage($"Traveler's Name: {_gameTraveler.Name}");
             ConsoleUtil.DisplayMessage("");
-            ConsoleUtil.DisplayMessage($"Traveler's Race: {_gamePlayer.Race}");
+            ConsoleUtil.DisplayMessage($"Traveler's Race: {_gameTraveler.Race}");
             ConsoleUtil.DisplayMessage("");
-            string spaceTimeLocationName = _gameUniverse.GetSpaceTimeLocationByID(_gamePlayer.SpaceTimeLocationID).Name;
+            string spaceTimeLocationName = _gameUniverse.GetSpaceTimeLocationByID(_gameTraveler.SpaceTimeLocationID).Name;
             ConsoleUtil.DisplayMessage($"Traveler's Current Location: {spaceTimeLocationName}");
 
             DisplayContinuePrompt();
