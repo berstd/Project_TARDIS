@@ -29,7 +29,7 @@ namespace Project_TARDIS
         /// <summary>
         /// default constructor to create the console view objects
         /// </summary>
-        public ConsoleView(Traveler gamePlayer, Universe gameUniverse)
+        public ConsoleView(Traveler gameTraveler, Universe gameUniverse)
         {   
             //
             // initialize class fields

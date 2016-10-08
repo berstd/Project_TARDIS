@@ -19,7 +19,7 @@ namespace Project_TARDIS
         //        are not accessed outside of the controller
         //
         private ConsoleView _gameConsoleView;
-        private Traveler _gamePlayer;
+        private Traveler _gameTraveler;
         private Universe _gameUniverse;
 
         #endregion
@@ -28,7 +28,6 @@ namespace Project_TARDIS
 
 
         #endregion
-
 
         #region CONSTRUCTORS
 
@@ -39,12 +38,12 @@ namespace Project_TARDIS
             //
             // instantiate a Salesperson object
             //
-            _gamePlayer = new Traveler();
+            _gameTraveler = new Traveler();
 
             //
             // instantiate a ConsoleView object
             //
-            _gameConsoleView = new ConsoleView(_gamePlayer, _gameUniverse);
+            _gameConsoleView = new ConsoleView(_gameTraveler, _gameUniverse);
 
             //
             // begins running the application UI
@@ -53,8 +52,7 @@ namespace Project_TARDIS
         }
 
         #endregion
-
-
+        
         #region METHODS
 
         /// <summary>
@@ -64,10 +62,10 @@ namespace Project_TARDIS
         {
             _usingGame = true;
             _gameUniverse = new Universe();
-            _gamePlayer = new Traveler();
-            _gameConsoleView = new ConsoleView(_gamePlayer, _gameUniverse);
+            _gameTraveler = new Traveler();
+            _gameConsoleView = new ConsoleView(_gameTraveler, _gameUniverse);
 
-            IntializeUniverse();
+            //IntializeUniverse();
         }
 
         /// <summary>
@@ -103,7 +101,7 @@ namespace Project_TARDIS
                         _gameConsoleView.DisplayLookAround();
                         break;
                     case TravelerAction.Travel:
-                        _gamePlayer.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
+                        _gameTraveler.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
                         break;
                     case TravelerAction.ListTARDISDestinations:
                         _gameConsoleView.DisplayListAllTARDISDestinations();
@@ -135,46 +133,11 @@ namespace Project_TARDIS
             if (!_missionInitialized)
             {
                 _gameConsoleView.DisplayMissionSetupIntro();
-                _gamePlayer.Name = _gameConsoleView.DisplayGetTravelersName();
-                _gamePlayer.Race = _gameConsoleView.DisplayGetTravelersRace();
-                _gamePlayer.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
+                _gameTraveler.Name = _gameConsoleView.DisplayGetTravelersName();
+                _gameTraveler.Race = _gameConsoleView.DisplayGetTravelersRace();
+                _gameTraveler.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
                 _missionInitialized = true;
             }
-        }
-
-        /// <summary>
-        /// initialize the universe with all of the space-time locations
-        /// </summary>
-        private void IntializeUniverse()
-        {
-            _gameUniverse.SpaceTimeLocations.Add(new SpaceTimeLocation
-            {
-                Name = "TARDIS Base",
-                SpaceTimeLocationID = 1,
-                Description = "The Norlon Corporation's secret laboratory located deep underground, " +
-                              " beneath a nondescript 7-11 on the south-side of Toledo, OH.",
-                Accessable = true
-            });
-
-            _gameUniverse.SpaceTimeLocations.Add(new SpaceTimeLocation
-            {
-                Name = "Xantoria Market",
-                SpaceTimeLocationID = 2,
-                Description = "The Xantoria market, once controlled by the Thorian elite, is now an " +
-                              "open market managed by the Xantorian Commerce Coop. It is a place " +
-                              "where many races from various systems trade goods.",
-                Accessable = false
-            });
-
-            _gameUniverse.SpaceTimeLocations.Add(new SpaceTimeLocation
-            {
-                Name = "Felandrian Plains",
-                SpaceTimeLocationID = 3,
-                Description = "The Felandrian Plains are a common destination for tourist. " +
-                  "Located just north of the equatorial line on the planet of Corlon, they" +
-                  "provide excellent habitat for a rich ecosystem of flora and fauna.",
-                Accessable = true
-            });
         }
 
         #endregion
