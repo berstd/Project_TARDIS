@@ -104,11 +104,23 @@ namespace Project_TARDIS
                     case TravelerAction.Travel:
                         _gameTraveler.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
                         break;
+                    case TravelerAction.TravelerInfo:
+                        _gameConsoleView.DisplayTravelerInfo();
+                        break;
+                    case TravelerAction.TravelerInventory:
+                        _gameConsoleView.DisplayTravelerItems();
+                        break;
+                    case TravelerAction.TravelerTreasure:
+                        _gameConsoleView.DisplayTravelerTreasure();
+                        break;
                     case TravelerAction.ListTARDISDestinations:
                         _gameConsoleView.DisplayListAllTARDISDestinations();
                         break;
-                    case TravelerAction.TravlerInfo:
-                        _gameConsoleView.DisplayTravelerInfo();
+                    case TravelerAction.ListItems:
+                        _gameConsoleView.DisplayListAllGameItems();
+                        break;
+                    case TravelerAction.ListTreasures:
+                        _gameConsoleView.DisplayListAllGameTreasures();
                         break;
                     case TravelerAction.Exit:
                         _usingGame = false;
@@ -131,16 +143,46 @@ namespace Project_TARDIS
         /// </summary>
         private void InitializeMission()
         {
-            if (!_missionInitialized)
-            {
-                _gameConsoleView.DisplayMissionSetupIntro();
-                _gameTraveler.Name = _gameConsoleView.DisplayGetTravelersName();
-                _gameTraveler.Race = _gameConsoleView.DisplayGetTravelersRace();
-                _gameTraveler.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
-                _missionInitialized = true;
-            }
+            _gameConsoleView.DisplayMissionSetupIntro();
+            _gameTraveler.Name = _gameConsoleView.DisplayGetTravelersName();
+            _gameTraveler.Race = _gameConsoleView.DisplayGetTravelersRace();
+            _gameTraveler.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
+            _missionInitialized = true;
+
+            // 
+            // add initial items to the traveler's inventory
+            //
+            AddItemToTravelersInventory(3);
+            AddItemToTravelersTreasure(1);
         }
 
+        /// <summary>
+        /// add a game item to the traveler's inventory
+        /// </summary>
+        /// <param name="itemID">game item ID</param>
+        private void AddItemToTravelersInventory(int itemID)
+        {
+            Item item;
+
+            item = _gameUniverse.GetItemtByID(itemID);
+            item.SpaceTimeLocationID = 0;
+
+            _gameTraveler.TravelersItems.Add(item);
+        }
+
+        /// <summary>
+        /// add a game treasure to the traveler's inventory
+        /// </summary>
+        /// <param name="itemID">game item ID</param>
+        private void AddItemToTravelersTreasure(int itemID)
+        {
+            Treasure item;
+
+            item = _gameUniverse.GetTreasuretByID(itemID);
+            item.SpaceTimeLocationID = 0;
+
+            _gameTraveler.TravelersTreasures.Add(item);
+        }
 
         #endregion
     }

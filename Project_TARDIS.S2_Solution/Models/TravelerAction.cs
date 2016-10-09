@@ -6,8 +6,12 @@
         MissionSetup,
         LookAround,
         Travel,
-        TravlerInfo,
+        TravelerInfo,
+        TravelerInventory,
+        TravelerTreasure,
         ListTARDISDestinations,
+        ListItems,
+        ListTreasures,
         Exit
     }
 }

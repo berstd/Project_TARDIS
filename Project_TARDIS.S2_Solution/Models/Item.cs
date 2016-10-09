@@ -21,5 +21,6 @@ namespace Project_TARDIS
         public override int Value { get; set; }
 
         public override bool CanAddToInventory { get; set; }
+
     }
 }

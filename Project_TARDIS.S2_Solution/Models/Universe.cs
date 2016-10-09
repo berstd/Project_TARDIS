@@ -125,7 +125,7 @@ namespace Project_TARDIS
         /// <returns>requested space-time location</returns>
         public SpaceTimeLocation GetSpaceTimeLocationByID(int ID)
         {
-            SpaceTimeLocation spt = new SpaceTimeLocation();
+            SpaceTimeLocation spt = null;
 
             //
             // run through the space-time location list and grab the correct one
@@ -158,7 +158,7 @@ namespace Project_TARDIS
         /// <returns>requested item object</returns>
         public Item GetItemtByID(int ID)
         {
-            Item requestedItem = new Item();
+            Item requestedItem = null;
 
             //
             // run through the item list and grab the correct one
@@ -191,7 +191,7 @@ namespace Project_TARDIS
         /// <returns>requested treasure object</returns>
         public Treasure GetTreasuretByID(int ID)
         {
-            Treasure requestedTreasure = new Treasure();
+            Treasure requestedTreasure = null;
 
             //
             // run through the item list and grab the correct one
@@ -210,7 +210,7 @@ namespace Project_TARDIS
             //
             if (requestedTreasure == null)
             {
-                string feedbackMessage = $"The item ID {ID} does not exist in the current Universe.";
+                string feedbackMessage = $"The treasure ID {ID} does not exist in the current Universe.";
                 throw new ArgumentException(ID.ToString(), feedbackMessage);
             }
 
@@ -337,6 +337,17 @@ namespace Project_TARDIS
                 Value = 0,
                 CanAddToInventory = false
             });
+
+            Items.Add(new Item
+            {
+                Name = "Encabulator",
+                GameObjectID = 3,
+                Description = "A multi-function device carried by all Time Lords.",
+                SpaceTimeLocationID = 0,
+                HasValue = true,
+                Value = 500,
+                CanAddToInventory = true
+            });
         }
 
         /// <summary>
@@ -352,7 +363,7 @@ namespace Project_TARDIS
                 Description = "A deep red ruby the size of an egg.",
                 SpaceTimeLocationID = 2,
                 HasValue = true,
-                Value = 15,
+                Value = 25,
                 CanAddToInventory = true
             });
 
@@ -360,9 +371,9 @@ namespace Project_TARDIS
             {
                 Name = "Lodestone",
                 TreasureType = Treasure.Type.Lodestone,
-                GameObjectID = 1,
+                GameObjectID = 2,
                 Description = "A deep red ruby the size of an egg.",
-                SpaceTimeLocationID = 2,
+                SpaceTimeLocationID = 3,
                 HasValue = true,
                 Value = 15,
                 CanAddToInventory = true

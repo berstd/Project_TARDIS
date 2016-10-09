@@ -85,7 +85,7 @@ namespace Project_TARDIS
 
             System.Environment.Exit(1);
         }
-        
+
         /// <summary>
         /// display the welcome screen
         /// </summary>
@@ -370,8 +370,12 @@ namespace Project_TARDIS
                 Console.WriteLine(
                     "\t" + "1. Look Around" + Environment.NewLine +
                     "\t" + "2. Travel" + Environment.NewLine +
-                    "\t" + "3. Display All TARDIS Destinations" + Environment.NewLine +
-                    "\t" + "4. Display Traveler Info" + Environment.NewLine +
+                    "\t" + "3. Display Traveler Info" + Environment.NewLine +
+                    "\t" + "4. Display Traveler Inventory" + Environment.NewLine +
+                    "\t" + "5. Display Traveler Treasure" + Environment.NewLine +
+                    "\t" + "6. Display All TARDIS Destinations" + Environment.NewLine +
+                    "\t" + "7. Display All Game Items" + Environment.NewLine +
+                    "\t" + "8. Display All Game Treasures" + Environment.NewLine +
                     "\t" + "E. Exit" + Environment.NewLine);
 
                 //
@@ -390,11 +394,27 @@ namespace Project_TARDIS
                         usingMenu = false;
                         break;
                     case '3':
-                        travelerActionChoice = TravelerAction.ListTARDISDestinations;
+                        travelerActionChoice = TravelerAction.TravelerInfo;
                         usingMenu = false;
                         break;
                     case '4':
-                        travelerActionChoice = TravelerAction.TravlerInfo;
+                        travelerActionChoice = TravelerAction.TravelerInventory;
+                        usingMenu = false;
+                        break;
+                    case '5':
+                        travelerActionChoice = TravelerAction.TravelerTreasure;
+                        usingMenu = false;
+                        break;
+                    case '6':
+                        travelerActionChoice = TravelerAction.ListTARDISDestinations;
+                        usingMenu = false;
+                        break;
+                    case '7':
+                        travelerActionChoice = TravelerAction.ListItems;
+                        usingMenu = false;
+                        break;
+                    case '8':
+                        travelerActionChoice = TravelerAction.ListTreasures;
                         usingMenu = false;
                         break;
                     case 'E':
@@ -450,8 +470,6 @@ namespace Project_TARDIS
         /// <summary>
         /// display a list of all TARDIS destinations
         /// <summary>
-        /// display all space-time locations
-        /// </summary>
         public void DisplayListAllTARDISDestinations()
         {
             ConsoleUtil.HeaderText = "Space-Time Locations";
@@ -463,6 +481,75 @@ namespace Project_TARDIS
                 ConsoleUtil.DisplayMessage("Name: " + location.Name);
                 ConsoleUtil.DisplayMessage("Description: " + location.Description);
                 ConsoleUtil.DisplayMessage("Accessible: " + location.Accessable);
+                ConsoleUtil.DisplayMessage("");
+            }
+
+            DisplayContinuePrompt();
+        }
+
+        /// <summary>
+        /// display a list of all game items
+        /// <summary>
+        public void DisplayListAllGameItems()
+        {
+            ConsoleUtil.HeaderText = "Game Items";
+            ConsoleUtil.DisplayReset();
+
+            foreach (Item item in _gameUniverse.Items)
+            {
+                ConsoleUtil.DisplayMessage("ID: " + item.GameObjectID);
+                ConsoleUtil.DisplayMessage("Name: " + item.Name);
+                ConsoleUtil.DisplayMessage("Description: " + item.Description);
+
+                //
+                // all treasure in the traveler's inventory have a SpaceTimeLocationID of 0
+                //
+                if (item.SpaceTimeLocationID != 0)
+                {
+                    ConsoleUtil.DisplayMessage("Location: " + _gameUniverse.GetSpaceTimeLocationByID(item.SpaceTimeLocationID).Name);
+                }
+                else
+                {
+                    ConsoleUtil.DisplayMessage("Location: Traveler's Inventory");
+                }
+
+
+                ConsoleUtil.DisplayMessage("Value: " + item.Value);
+                ConsoleUtil.DisplayMessage("Can Add to Inventory: " + item.CanAddToInventory.ToString().ToUpper());
+                ConsoleUtil.DisplayMessage("");
+            }
+
+            DisplayContinuePrompt();
+        }
+
+        /// <summary>
+        /// display a list of all game treasures
+        /// <summary>
+        public void DisplayListAllGameTreasures()
+        {
+            ConsoleUtil.HeaderText = "Game Treasures";
+            ConsoleUtil.DisplayReset();
+
+            foreach (Treasure treasure in _gameUniverse.Treasures)
+            {
+                ConsoleUtil.DisplayMessage("ID: " + treasure.GameObjectID);
+                ConsoleUtil.DisplayMessage("Name: " + treasure.Name);
+                ConsoleUtil.DisplayMessage("Description: " + treasure.Description);
+                
+                //
+                // all treasure in the traveler's inventory have a SpaceTimeLocationID of 0
+                //
+                if (treasure.SpaceTimeLocationID != 0)
+                {
+                    ConsoleUtil.DisplayMessage("Location: " + _gameUniverse.GetSpaceTimeLocationByID(treasure.SpaceTimeLocationID).Name);
+                }
+                else
+                {
+                    ConsoleUtil.DisplayMessage("Location: Traveler's Inventory");
+                }
+
+                ConsoleUtil.DisplayMessage("Value: " + treasure.Value);
+                ConsoleUtil.DisplayMessage("Can Add to Inventory: " + treasure.CanAddToInventory.ToString().ToUpper());
                 ConsoleUtil.DisplayMessage("");
             }
 
@@ -483,6 +570,51 @@ namespace Project_TARDIS
             ConsoleUtil.DisplayMessage("");
             string spaceTimeLocationName = _gameUniverse.GetSpaceTimeLocationByID(_gameTraveler.SpaceTimeLocationID).Name;
             ConsoleUtil.DisplayMessage($"Traveler's Current Location: {spaceTimeLocationName}");
+
+            DisplayContinuePrompt();
+        }
+
+        /// <summary>
+        /// display the current traveler inventory
+        /// </summary>
+        public void DisplayTravelerItems()
+        {
+            ConsoleUtil.HeaderText = "Traveler Inventory";
+            ConsoleUtil.DisplayReset();
+
+            ConsoleUtil.DisplayMessage("Traveler Items");
+            ConsoleUtil.DisplayMessage("");
+
+            foreach (Item item in _gameTraveler.TravelersItems)
+            {
+                ConsoleUtil.DisplayMessage("ID: " + item.GameObjectID);
+                ConsoleUtil.DisplayMessage("Name: " + item.Name);
+                ConsoleUtil.DisplayMessage("Description: " + item.Description);
+                ConsoleUtil.DisplayMessage("");
+            }
+
+            DisplayContinuePrompt();
+        }
+
+        /// <summary>
+        /// display the current traveler's treasure
+        /// </summary>
+        public void DisplayTravelerTreasure()
+        {
+            ConsoleUtil.HeaderText = "Traveler Inventory";
+            ConsoleUtil.DisplayReset();
+
+            ConsoleUtil.DisplayMessage("");
+            ConsoleUtil.DisplayMessage("Traveler Treasure");
+            ConsoleUtil.DisplayMessage("");
+
+            foreach (Treasure treasure in _gameTraveler.TravelersTreasures)
+            {
+                ConsoleUtil.DisplayMessage("ID: " + treasure.GameObjectID);
+                ConsoleUtil.DisplayMessage("Name: " + treasure.Name);
+                ConsoleUtil.DisplayMessage("Description: " + treasure.Description);
+                ConsoleUtil.DisplayMessage("");
+            }
 
             DisplayContinuePrompt();
         }
