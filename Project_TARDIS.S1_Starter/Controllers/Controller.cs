@@ -18,6 +18,9 @@ namespace Project_TARDIS
         // Note - these field objects do not require properties since they
         //        are not accessed outside of the controller
         //
+        private ConsoleView _gameConsoleView;
+        private Traveler _gameTraveler;
+        private Universe _gameUniverse;
 
         #endregion
 

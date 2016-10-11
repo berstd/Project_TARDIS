@@ -26,7 +26,7 @@ namespace Project_TARDIS
 
         public int TransportObjectID { get; set; }
 
-        public override string SpaceTimeTransporterMessage()
+        public string SpaceTimeTransporterMessage()
         {
             string message = null;
 

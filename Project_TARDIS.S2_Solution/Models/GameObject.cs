@@ -42,12 +42,7 @@ namespace Project_TARDIS
 
         #region METHODS
 
-        public virtual string SpaceTimeTransporterMessage()
-        {
-            string gameObjectMessage = ($"The {this.Name}. is not a Space-Time transport device.");
 
-            return gameObjectMessage;
-        }
 
         #endregion
 

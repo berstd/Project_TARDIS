@@ -11,7 +11,6 @@ namespace Project_TARDIS
         #region FIELDS
 
         private bool _usingGame;
-        bool _missionInitialized = false;
 
         //
         // declare all objects required for the game
@@ -28,8 +27,7 @@ namespace Project_TARDIS
 
 
         #endregion
-
-
+        
         #region CONSTRUCTORS
 
         public Controller()
@@ -53,8 +51,7 @@ namespace Project_TARDIS
         }
 
         #endregion
-
-
+        
         #region METHODS
 
         /// <summary>
@@ -147,7 +144,6 @@ namespace Project_TARDIS
             _gameTraveler.Name = _gameConsoleView.DisplayGetTravelersName();
             _gameTraveler.Race = _gameConsoleView.DisplayGetTravelersRace();
             _gameTraveler.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
-            _missionInitialized = true;
 
             // 
             // add initial items to the traveler's inventory
