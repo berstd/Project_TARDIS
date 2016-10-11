@@ -99,7 +99,7 @@ namespace Project_TARDIS
         /// return the next available ID for a treasure
         /// </summary>
         /// <returns>next GameObjectID </returns>
-        private int GetNexTreasureID()
+        private int GetNextTreasureID()
         {
             int MaxID = 0;
 

@@ -9,15 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_TARDIS.S1_Starter",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_TARDIS.S2_Solution", "Project_TARDIS.S2_Solution\Project_TARDIS.S2_Solution.csproj", "{D0724317-6E8C-4AB7-96CB-5309B3A0CA04}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{AA168023-C729-4010-B350-C82333AF504A}"
-	ProjectSection(SolutionItems) = preProject
-		Documentation\Project_TARDIS.S2 Controller (collapsed).pdf = Documentation\Project_TARDIS.S2 Controller (collapsed).pdf
-		Documentation\Project_TARDIS.S2 Controller (expanded).pdf = Documentation\Project_TARDIS.S2 Controller (expanded).pdf
-		Documentation\Project_TARDIS.S2 Universe (collapsed).pdf = Documentation\Project_TARDIS.S2 Universe (collapsed).pdf
-		Documentation\Project_TARDIS.S2 Universe (expanded).pdf = Documentation\Project_TARDIS.S2 Universe (expanded).pdf
-		Documentation\VScodePrint.xml = Documentation\VScodePrint.xml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

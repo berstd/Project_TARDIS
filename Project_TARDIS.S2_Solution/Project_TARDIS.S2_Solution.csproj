@@ -60,6 +60,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="_Documentation\ClassDiagram1 - Copy.cd" />
+    <None Include="_Documentation\Universe_Controller_View Diagram.cd" />
+    <None Include="_Documentation\Project_TARDIS.S2 Controller %28collapsed%29.pdf" />
+    <None Include="_Documentation\Project_TARDIS.S2 Controller %28expanded%29.pdf" />
+    <None Include="_Documentation\Project_TARDIS.S2 Universe %28collapsed%29.pdf" />
+    <None Include="_Documentation\Project_TARDIS.S2 Universe %28expanded%29.pdf" />
+    <None Include="_Documentation\Project_TARDIS.S2 View %28collapsed%29.pdf" />
+    <None Include="_Documentation\Project_TARDIS.S2 View %28expanded%29.pdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="_Documentation\VScodePrint.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
