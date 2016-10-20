@@ -98,6 +98,21 @@ namespace Project_TARDIS
                     case TravelerAction.LookAround:
                         _gameConsoleView.DisplayLookAround();
                         break;
+                    case TravelerAction.LookAt:
+
+                        break;
+                    case TravelerAction.PickUpItem:
+
+                        break;
+                    case TravelerAction.PickUpTreasure:
+
+                        break;
+                    case TravelerAction.PutDownItem:
+
+                        break;
+                    case TravelerAction.PutDownTreasure:
+
+                        break;
                     case TravelerAction.Travel:
                         _gameTraveler.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
                         break;

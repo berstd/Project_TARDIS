@@ -15,7 +15,7 @@ namespace Project_TARDIS
         #region FIELDS
 
         private static int _windowWidth = 79;
-        private static int _windowHeight = 20;
+        private static int _windowHeight = 35;
 
         private static int _windowLeft = 20;
         private static int _windowTop = 20;

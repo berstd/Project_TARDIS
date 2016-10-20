@@ -365,18 +365,36 @@ namespace Project_TARDIS
                 //
                 // display the menu
                 //
-                ConsoleUtil.DisplayMessage("What would you like to do (Type Number).");
+                ConsoleUtil.DisplayMessage("What would you like to do (Type Letter).");
                 Console.WriteLine();
                 Console.WriteLine(
-                    "\t" + "1. Look Around" + Environment.NewLine +
-                    "\t" + "2. Travel" + Environment.NewLine +
-                    "\t" + "3. Display Traveler Info" + Environment.NewLine +
-                    "\t" + "4. Display Traveler Inventory" + Environment.NewLine +
-                    "\t" + "5. Display Traveler Treasure" + Environment.NewLine +
-                    "\t" + "6. Display All TARDIS Destinations" + Environment.NewLine +
-                    "\t" + "7. Display All Game Items" + Environment.NewLine +
-                    "\t" + "8. Display All Game Treasures" + Environment.NewLine +
-                    "\t" + "E. Exit" + Environment.NewLine);
+                    "\t" + "**************************" + Environment.NewLine +
+                    "\t" + "Traveler Actions" + Environment.NewLine +
+                    "\t" + "**************************" + Environment.NewLine +
+                    "\t" + "A. Look Around" + Environment.NewLine +
+                    "\t" + "B. Look At" + Environment.NewLine +
+                    "\t" + "C. Pick Up Item" + Environment.NewLine +
+                    "\t" + "D. Pick Up Treasure" + Environment.NewLine +
+                    "\t" + "E. Put Down Item" + Environment.NewLine +
+                    "\t" + "F. Put Down Treasure" + Environment.NewLine +
+                    "\t" + "G. Travel" + Environment.NewLine +
+                    "\t" + Environment.NewLine +
+                    "\t" + "**************************" + Environment.NewLine +
+                    "\t" + "Traveler Information" + Environment.NewLine +
+                    "\t" + "**************************" + Environment.NewLine +
+                    "\t" + "H. Display General Traveler Info" + Environment.NewLine +
+                    "\t" + "I. Display Traveler Inventory" + Environment.NewLine +
+                    "\t" + "J. Display Traveler Treasure" + Environment.NewLine +
+                    "\t" + Environment.NewLine +
+                    "\t" + "**************************" + Environment.NewLine +
+                    "\t" + "Game Information" + Environment.NewLine +
+                    "\t" + "**************************" + Environment.NewLine +
+                    "\t" + "K. Display All TARDIS Destinations" + Environment.NewLine +
+                    "\t" + "L. Display All Game Items" + Environment.NewLine +
+                    "\t" + "M. Display All Game Treasures" + Environment.NewLine +
+                    "\t" + Environment.NewLine +
+                    "\t" + "**************************" + Environment.NewLine +
+                    "\t" + "Q. Quit" + Environment.NewLine);
 
                 //
                 // get and process the user's response
@@ -385,40 +403,73 @@ namespace Project_TARDIS
                 ConsoleKeyInfo userResponse = Console.ReadKey(true);
                 switch (userResponse.KeyChar)
                 {
-                    case '1':
+                    case 'A':
+                    case 'a':
                         travelerActionChoice = TravelerAction.LookAround;
                         usingMenu = false;
                         break;
-                    case '2':
-                        travelerActionChoice = TravelerAction.Travel;
+                    case 'B':
+                    case 'b':
+                        travelerActionChoice = TravelerAction.LookAt;
                         usingMenu = false;
                         break;
-                    case '3':
-                        travelerActionChoice = TravelerAction.TravelerInfo;
+                    case 'C':
+                    case 'c':
+                        travelerActionChoice = TravelerAction.PickUpItem;
                         usingMenu = false;
                         break;
-                    case '4':
-                        travelerActionChoice = TravelerAction.TravelerInventory;
-                        usingMenu = false;
-                        break;
-                    case '5':
-                        travelerActionChoice = TravelerAction.TravelerTreasure;
-                        usingMenu = false;
-                        break;
-                    case '6':
-                        travelerActionChoice = TravelerAction.ListTARDISDestinations;
-                        usingMenu = false;
-                        break;
-                    case '7':
-                        travelerActionChoice = TravelerAction.ListItems;
-                        usingMenu = false;
-                        break;
-                    case '8':
-                        travelerActionChoice = TravelerAction.ListTreasures;
+                    case 'D':
+                    case 'd':
+                        travelerActionChoice = TravelerAction.PickUpTreasure;
                         usingMenu = false;
                         break;
                     case 'E':
                     case 'e':
+                        travelerActionChoice = TravelerAction.PutDownItem;
+                        usingMenu = false;
+                        break;
+                    case 'F':
+                    case 'f':
+                        travelerActionChoice = TravelerAction.PutDownTreasure;
+                        usingMenu = false;
+                        break;
+                    case 'G':
+                    case 'g':
+                        travelerActionChoice = TravelerAction.Travel;
+                        usingMenu = false;
+                        break;
+                    case 'H':
+                    case 'h':
+                        travelerActionChoice = TravelerAction.TravelerInfo;
+                        usingMenu = false;
+                        break;
+                    case 'I':
+                    case 'i':
+                        travelerActionChoice = TravelerAction.TravelerInventory;
+                        usingMenu = false;
+                        break;
+                    case 'J':
+                    case 'j':
+                        travelerActionChoice = TravelerAction.TravelerTreasure;
+                        usingMenu = false;
+                        break;
+                    case 'K':
+                    case 'k':
+                        travelerActionChoice = TravelerAction.ListTARDISDestinations;
+                        usingMenu = false;
+                        break;
+                    case 'L':
+                    case 'l':
+                        travelerActionChoice = TravelerAction.ListItems;
+                        usingMenu = false;
+                        break;
+                    case 'M':
+                    case 'm':
+                        travelerActionChoice = TravelerAction.ListTreasures;
+                        usingMenu = false;
+                        break;
+                    case 'Q':
+                    case 'q':
                         travelerActionChoice = TravelerAction.Exit;
                         usingMenu = false;
                         break;
