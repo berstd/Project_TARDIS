@@ -339,7 +339,46 @@ namespace Project_TARDIS
             {
                 ConsoleUtil.DisplayMessage(location.SpaceTimeLocationID.ToString().PadRight(10) + location.Name.PadRight(20));
             }
+        }
 
+        /// <summary>
+        /// generate a table of item names and ids
+        /// </summary>
+        public void DisplayItemTable(Item[] items)
+        {
+            //
+            // table headings
+            //
+            ConsoleUtil.DisplayMessage("ID".PadRight(10) + "Name".PadRight(20));
+            ConsoleUtil.DisplayMessage("---".PadRight(10) + "-------------".PadRight(20));
+
+            //
+            // item name and id
+            //
+            foreach (Item item in items)
+            {
+                ConsoleUtil.DisplayMessage(item.GameObjectID.ToString().PadRight(10) + item.Name.PadRight(20));
+            }
+        }
+
+        /// <summary>
+        /// generate a table of treasure names and ids
+        /// </summary>
+        public void DisplayTreasureTable(Treasure[] treasures)
+        {
+            //
+            // table headings
+            //
+            ConsoleUtil.DisplayMessage("ID".PadRight(10) + "Name".PadRight(20));
+            ConsoleUtil.DisplayMessage("---".PadRight(10) + "-------------".PadRight(20));
+
+            //
+            // treasure name and id
+            //
+            foreach (Treasure treasure in treasures)
+            {
+                ConsoleUtil.DisplayMessage(treasure.GameObjectID.ToString().PadRight(10) + treasure.Name.PadRight(20));
+            }
         }
 
         /// <summary>
@@ -497,6 +536,33 @@ namespace Project_TARDIS
             ConsoleUtil.DisplayReset();
 
             ConsoleUtil.DisplayMessage(_gameUniverse.GetSpaceTimeLocationByID(_gameTraveler.SpaceTimeLocationID).Description);
+
+            ConsoleUtil.DisplayMessage("");
+            ConsoleUtil.DisplayMessage("Items in current location.");
+            foreach (Item item in _gameUniverse.GetItemtsBySpaceTimeLocationID(_gameTraveler.SpaceTimeLocationID))
+            {
+                ConsoleUtil.DisplayMessage(item.Name + " - " + item.Description);
+            }
+
+            ConsoleUtil.DisplayMessage("");
+            ConsoleUtil.DisplayMessage("Treasures in current location.");
+            foreach (Treasure treasure in _gameUniverse.GetTreasuressBySpaceTimeLocationID(_gameTraveler.SpaceTimeLocationID))
+            {
+                ConsoleUtil.DisplayMessage(treasure.Name + " - " + treasure.Description);
+            }
+
+            DisplayContinuePrompt();
+        }
+
+        /// <summary>
+        /// display information about an item in the current space-time location
+        /// </summary>
+        public void DisplayLookAt()
+        {
+            ConsoleUtil.HeaderText = "Look at a Game Item";
+            ConsoleUtil.DisplayReset();
+
+            ConsoleUtil.DisplayMessage(_gameUniverse.GetSpaceTimeLocationByID(_gameTraveler.SpaceTimeLocationID).Name);
 
             ConsoleUtil.DisplayMessage("");
             ConsoleUtil.DisplayMessage("Items in current location.");
