@@ -99,10 +99,10 @@ namespace Project_TARDIS
                         _gameConsoleView.DisplayLookAround();
                         break;
                     case TravelerAction.LookAt:
-                        
+                        _gameConsoleView.DisplayLookAt();
                         break;
                     case TravelerAction.PickUpItem:
-
+                        _gameConsoleView.DisplayPickUpItem();
                         break;
                     case TravelerAction.PickUpTreasure:
 
@@ -189,7 +189,7 @@ namespace Project_TARDIS
         {
             Treasure item;
 
-            item = _gameUniverse.GetTreasuretByID(itemID);
+            item = _gameUniverse.GetTreasureByID(itemID);
             item.SpaceTimeLocationID = 0;
 
             _gameTraveler.TravelersTreasures.Add(item);

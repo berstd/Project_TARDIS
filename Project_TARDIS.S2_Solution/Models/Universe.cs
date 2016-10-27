@@ -189,7 +189,7 @@ namespace Project_TARDIS
         /// </summary>
         /// <param name="ID">game object ID</param>
         /// <returns>requested treasure object</returns>
-        public Treasure GetTreasuretByID(int ID)
+        public Treasure GetTreasureByID(int ID)
         {
             Treasure requestedTreasure = null;
 
@@ -251,7 +251,7 @@ namespace Project_TARDIS
         /// </summary>
         /// <param name="ID">space-time location ID</param>
         /// <returns>list of treasures in the specified location</returns>
-        public List<Treasure> GetTreasuressBySpaceTimeLocationID(int ID)
+        public List<Treasure> GetTreasuresBySpaceTimeLocationID(int ID)
         {
             // TODO validate SpaceTimeLocationID
 

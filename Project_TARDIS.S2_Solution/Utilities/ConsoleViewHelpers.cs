@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Project_TARDIS
 {
-    class ConsoleViewHelpers
+    public static class ConsoleViewHelpers
     {
         /// <summary>
         /// Display a Yes or No prompt with a message
         /// </summary>
         /// <param name="promptMessage">prompt message</param>
         /// <returns>bool where true = yes</returns>
-        private bool? DisplayGetYesNoPrompt(string promptMessage)
+        public static bool? DisplayGetYesNoPrompt(string promptMessage)
         {
             bool? yesNoChoice = null;
             bool validResponse = false;
@@ -54,7 +54,7 @@ namespace Project_TARDIS
         /// </summary>
         /// <param name="promptMessage">prompt message</param>
         /// <returns>user's choice of integer</returns>
-        private int DisplayGetIntegerPrompt(string promptMessage, int minNumber, int maxNumber)
+        public static int DisplayGetIntegerPrompt(string promptMessage, int minNumber, int maxNumber)
         {
             //
             // dummy choice - refactor later to return a null
@@ -101,7 +101,7 @@ namespace Project_TARDIS
         /// <summary>
         /// display the Continue prompt
         /// </summary>
-        public void DisplayContinuePrompt()
+        public static void DisplayContinuePrompt()
         {
             Console.CursorVisible = false;
 
