@@ -15,6 +15,9 @@ namespace Project_TARDIS
 
         #endregion
 
+
+        #region PROPERTIES
+
         public List<Item> TravelersItems
         {
             get { return _travelersItems; }
@@ -26,9 +29,6 @@ namespace Project_TARDIS
             get { return _travelersTreasures; }
             set { _travelersTreasures = value; }
         }
-
-        #region PROPERTIES
-
 
 
         #endregion

@@ -14,6 +14,10 @@ namespace Project_TARDIS
         private int _spaceTimeLocationID; // must be a unique value for each object
         private string _description;
         private bool _accessable;
+        private List<Item> _items;
+        private List<Treasure> _treasures;
+
+
 
         #endregion
 
@@ -44,6 +48,17 @@ namespace Project_TARDIS
             set { _accessable = value; }
         }
 
+        public List<Item> LocalItems
+        {
+            get { return _items; }
+            set { _items = value; }
+        }
+
+        public List<Treasure> LocalTreasures
+        {
+            get { return _treasures; }
+            set { _treasures = value; }
+        }
         #endregion
 
 

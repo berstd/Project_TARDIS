@@ -63,7 +63,55 @@ namespace Project_TARDIS
             _gameUniverse = new Universe();
             _gameTraveler = new Traveler();
             _gameConsoleView = new ConsoleView(_gameTraveler, _gameUniverse);
+            IntializeInventories();
+        }
+        /// <summary>
+        /// initialize the traveler's starting mission  parameters
+        /// </summary>
+        private void InitializeMission()
+        {
+            //_gameConsoleView.DisplayMissionSetupIntro();
+            _gameTraveler.Name = "Dyl";//_gameConsoleView.DisplayGetTravelersName();
+            _gameTraveler.Race = Traveler.RaceType.Human;//_gameConsoleView.DisplayGetTravelersRace();
+            _gameTraveler.SpaceTimeLocationID = 3;//_gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
+            // AddItemToTravelersInventory(3);
+            // 
+            // add initial items to the traveler's inventory
+            //
+            //AddItemToTravelersInventory(3);
+            //AddItemToTravelersTreasure(1);
+        }
+        private void IntializeInventories()
+        {
 
+            foreach (Item item in _gameUniverse.Items)
+            {
+                if (item.SpaceTimeLocationID==0)
+                {
+                    AddItemToTravelersInventory(item)
+                }
+                GetSpaceTimeLocationByID(item.SpaceTimeLocationID).LocalItems.Add(item);
+            }
+            foreach (Treasure treasure in Treasures)
+            {
+                GetSpaceTimeLocationByID(treasure.SpaceTimeLocationID).LocalTreasures.Add(treasure);
+            }
+
+            List<Treasure> treasuresInSpaceTimeLocation = new List<Treasure>();
+
+            //
+            // run through the treasure list and put all items in the current location
+            // into a list
+            //
+            foreach (Treasure treasure in Treasures)
+            {
+                if (treasure.SpaceTimeLocationID == ID)
+                {
+                    treasuresInSpaceTimeLocation.Add(treasure);
+                }
+            }
+
+            return treasuresInSpaceTimeLocation;
         }
 
         /// <summary>
@@ -73,7 +121,7 @@ namespace Project_TARDIS
         {
             TravelerAction travelerActionChoice;
 
-            _gameConsoleView.DisplayWelcomeScreen();
+            //_gameConsoleView.DisplayWelcomeScreen();
 
             InitializeMission();
 
@@ -161,29 +209,8 @@ namespace Project_TARDIS
             }
 
             _gameConsoleView.DisplayExitPrompt();
-
-            //
-            // close the application
-            //
-            Environment.Exit(1);
         }
 
-        /// <summary>
-        /// initialize the traveler's starting mission  parameters
-        /// </summary>
-        private void InitializeMission()
-        {
-            _gameConsoleView.DisplayMissionSetupIntro();
-            _gameTraveler.Name = _gameConsoleView.DisplayGetTravelersName();
-            _gameTraveler.Race = _gameConsoleView.DisplayGetTravelersRace();
-            _gameTraveler.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
-
-            // 
-            // add initial items to the traveler's inventory
-            //
-            AddItemToTravelersInventory(3);
-            AddItemToTravelersTreasure(1);
-        }
 
         /// <summary>
         /// add a game item to the traveler's inventory
@@ -203,14 +230,23 @@ namespace Project_TARDIS
         /// add a game treasure to the traveler's inventory
         /// </summary>
         /// <param name="itemID">game item ID</param>
-        private void AddItemToTravelersTreasure(int itemID)
+        private void AddItemToTravelersTreasure(Item item)
         {
-            Treasure item;
-
-            item = _gameUniverse.GetTreasureByID(itemID);
-            item.SpaceTimeLocationID = 0;
-
+            
+   
             _gameTraveler.TravelersTreasures.Add(item);
+        }
+
+        //DisplayObjectTable<T>(List<T> objs) where T : GameObject
+        private void MoveTreasure(Treasure treasure, int newLocation)
+        {
+            if( newLocation ==0)
+            {
+                _gameTraveler.TravelersTreasures.Add(treasure);
+            } else
+            {
+                _gameUniverse.GetSpaceTimeLocationByID(newLocation).LocalTreasures.Add
+            }
         }
 
         #endregion

@@ -344,7 +344,7 @@ namespace Project_TARDIS
         /// <summary>
         /// generate a table of item names and ids
         /// </summary>
-        public void DisplayItemTable(List<Item> items)
+        public void DisplayObjectTable<T>(List<T> objs) where T : GameObject
         {
             //
             // table headings
@@ -355,9 +355,9 @@ namespace Project_TARDIS
             //
             // item name and id
             //
-            foreach (Item item in items)
+            foreach (GameObject obj in objs)
             {
-                ConsoleUtil.DisplayMessage(item.GameObjectID.ToString().PadRight(10) + item.Name.PadRight(20));
+                ConsoleUtil.DisplayMessage(obj.GameObjectID.ToString().PadRight(10) + obj.Name.PadRight(20));
             }
         }
 
@@ -546,13 +546,10 @@ namespace Project_TARDIS
         public void DisplayLookAt()
         {
             int currentSptID = _gameTraveler.SpaceTimeLocationID;
-            List<Item> itemsInSpt = new List<Item>();
-            List<Treasure> treasuresInSpt = new List<Treasure>();
+            List<GameObject> itemsInSpt = new List<GameObject>();
             Item itemToLookAt = new Item();
-            Treasure treasureToLookAt = new Treasure();
 
             itemsInSpt = _gameUniverse.GetItemtsBySpaceTimeLocationID(currentSptID);
-            treasuresInSpt = _gameUniverse.GetTreasuresBySpaceTimeLocationID(currentSptID);
 
             ConsoleUtil.HeaderText = "Look at a Game Items in Current Location";
             ConsoleUtil.DisplayReset();
@@ -563,11 +560,10 @@ namespace Project_TARDIS
             {
                 ConsoleUtil.DisplayMessage("");
                 ConsoleUtil.DisplayMessage("Items in current location.");
-                DisplayItemTable(itemsInSpt);
+                DisplayObjectTable(itemsInSpt);
 
-                ConsoleUtil.DisplayPromptMessage(
-                    "Enter the item number to view or press the Enter key to move on. "
-                    ); // TODO code in validation
+                ConsoleUtil.DisplayPromptMessage("Enter the item number to view");
+                // TODO code in validation
                 int itemIDChoice;
 
                 if (int.TryParse(Console.ReadLine(), out itemIDChoice))
@@ -578,6 +574,69 @@ namespace Project_TARDIS
                     DisplayContinuePrompt();
                 }
             }
+            else
+            {
+                ConsoleUtil.DisplayMessage("There are no items here");
+            }
+
+        }
+
+        /// <summary>
+        /// display information about items and treasures in the current space-time location
+        /// </summary>
+        public void DisplayLookAtItem()
+        {
+            int currentSptID = _gameTraveler.SpaceTimeLocationID;
+            List<Item> itemsInSpt = new List<Item>();
+            Item itemToLookAt = new Item();
+
+            itemsInSpt = _gameUniverse.GetItemtsBySpaceTimeLocationID(currentSptID);
+
+            ConsoleUtil.HeaderText = "Look at a Game Items in Current Location";
+            ConsoleUtil.DisplayReset();
+
+            ConsoleUtil.DisplayMessage(_gameUniverse.GetSpaceTimeLocationByID(currentSptID).Name);
+
+            if (itemsInSpt != null)
+            {
+                ConsoleUtil.DisplayMessage("");
+                ConsoleUtil.DisplayMessage("Items in current location.");
+                DisplayObjectTable(itemsInSpt);
+
+                ConsoleUtil.DisplayPromptMessage("Enter the item number to view"); 
+                // TODO code in validation
+                int itemIDChoice;
+
+                if (int.TryParse(Console.ReadLine(), out itemIDChoice))
+                {
+                    itemToLookAt = _gameUniverse.GetItemtByID(itemIDChoice);
+                    ConsoleUtil.DisplayMessage(itemToLookAt.Description);
+
+                    DisplayContinuePrompt();
+                }
+            }
+            else
+            {
+                ConsoleUtil.DisplayMessage("There are no items here");
+            }
+
+        }
+
+        /// <summary>
+        /// display information about items and treasures in the current space-time location
+        /// </summary>
+        public void DisplayLookAtTreasure()
+        {
+            int currentSptID = _gameTraveler.SpaceTimeLocationID;
+            List<Treasure> treasuresInSpt = new List<Treasure>();
+            Treasure treasureToLookAt = new Treasure();
+
+            treasuresInSpt = _gameUniverse.GetTreasuresBySpaceTimeLocationID(currentSptID);
+
+            ConsoleUtil.HeaderText = "Look at a Game Items in Current Location";
+            ConsoleUtil.DisplayReset();
+
+            ConsoleUtil.DisplayMessage(_gameUniverse.GetSpaceTimeLocationByID(currentSptID).Name);
 
             if (treasuresInSpt != null)
             {
@@ -598,8 +657,11 @@ namespace Project_TARDIS
                     DisplayContinuePrompt();
                 }
             }
+            else
+            {
+                ConsoleUtil.DisplayMessage("There's no treasure here");
+            }
         }
-
         /// <summary>
         /// display a list of all TARDIS destinations
         /// <summary>
@@ -773,7 +835,7 @@ namespace Project_TARDIS
             ConsoleUtil.DisplayMessage("Items in current Location");
             ConsoleUtil.DisplayMessage("");
 
-            DisplayItemTable(itemsInCurrentLocation);
+            DisplayObjectTable(itemsInCurrentLocation);
 
             ConsoleUtil.DisplayPromptMessage("Enter Item Number:");
             itemID = int.Parse(Console.ReadLine()); // TODO validate ID

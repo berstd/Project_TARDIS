@@ -61,6 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="_Documentation\CIT195 - TB Quest Project %28Sprint 2 Instructions%29.pdf" />
     <None Include="_Documentation\ClassDiagram1 - Copy.cd" />
     <None Include="_Documentation\Project_TARDIS.S2 Controller %28collapsed%29.pdf" />
     <None Include="_Documentation\Project_TARDIS.S2 Controller %28expanded%29.pdf" />

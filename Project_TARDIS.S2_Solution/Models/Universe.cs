@@ -156,7 +156,7 @@ namespace Project_TARDIS
         /// </summary>
         /// <param name="ID">game object ID</param>
         /// <returns>requested item object</returns>
-        public Item GetItemtByID(int ID)
+        public Item GetItemByID(int ID)
         {
             Item requestedItem = null;
 
@@ -226,51 +226,51 @@ namespace Project_TARDIS
         /// </summary>
         /// <param name="ID">space-time location ID</param>
         /// <returns>list of items in the specified location</returns>
-        public List<Item> GetItemtsBySpaceTimeLocationID(int ID)
-        {
-            // TODO validate SpaceTimeLocationID
+        //public List<Item> GetItemtsBySpaceTimeLocationID(int ID)
+        //{
+        //    // TODO validate SpaceTimeLocationID
 
-            List<Item> itemsInSpaceTimeLocation = new List<Item>();
+        //    List<Item> itemsInSpaceTimeLocation = new List<Item>();
 
-            //
-            // run through the item list and put all items in the current location
-            // into a list
-            //
-            foreach (Item item in Items)
-            {
-                if (item.SpaceTimeLocationID == ID)
-                {
-                    itemsInSpaceTimeLocation.Add(item);
-                }
-            }
+        //    //
+        //    // run through the item list and put all items in the current location
+        //    // into a list
+        //    //
+        //    foreach (Item item in Items)
+        //    {
+        //        if (item.SpaceTimeLocationID == ID)
+        //        {
+        //            itemsInSpaceTimeLocation.Add(item);
+        //        }
+        //    }
 
-            return itemsInSpaceTimeLocation;
-        }
+        //    return itemsInSpaceTimeLocation;
+        //}
 
         /// get a list of treasures using a space-time location ID
         /// </summary>
         /// <param name="ID">space-time location ID</param>
         /// <returns>list of treasures in the specified location</returns>
-        public List<Treasure> GetTreasuresBySpaceTimeLocationID(int ID)
-        {
-            // TODO validate SpaceTimeLocationID
+        //public List<Treasure> GetTreasuresBySpaceTimeLocationID(int ID)
+        //{
+        //    // TODO validate SpaceTimeLocationID
 
-            List<Treasure> treasuresInSpaceTimeLocation = new List<Treasure>();
+        //    List<Treasure> treasuresInSpaceTimeLocation = new List<Treasure>();
 
-            //
-            // run through the treasure list and put all items in the current location
-            // into a list
-            //
-            foreach (Treasure treasure in Treasures)
-            {
-                if (treasure.SpaceTimeLocationID == ID)
-                {
-                    treasuresInSpaceTimeLocation.Add(treasure);
-                }
-            }
+        //    //
+        //    // run through the treasure list and put all items in the current location
+        //    // into a list
+        //    //
+        //    foreach (Treasure treasure in Treasures)
+        //    {
+        //        if (treasure.SpaceTimeLocationID == ID)
+        //        {
+        //            treasuresInSpaceTimeLocation.Add(treasure);
+        //        }
+        //    }
 
-            return treasuresInSpaceTimeLocation;
-        }
+        //    return treasuresInSpaceTimeLocation;
+        //}
 
         #endregion
 
@@ -287,7 +287,9 @@ namespace Project_TARDIS
                 SpaceTimeLocationID = 1,
                 Description = "The Norlon Corporation's secret laboratory located deep underground, " +
                               " beneath a nondescript 7-11 on the south-side of Toledo, OH.",
-                Accessable = true
+                Accessable = true,
+                LocalItems = {},
+                LocalTreasures = {}
             });
 
             SpaceTimeLocations.Add(new SpaceTimeLocation
@@ -297,7 +299,10 @@ namespace Project_TARDIS
                 Description = "The Xantoria market, once controlled by the Thorian elite, is now an " +
                               "open market managed by the Xantorian Commerce Coop. It is a place " +
                               "where many races from various systems trade goods.",
-                Accessable = true
+                Accessable = true,
+                LocalItems = { },
+                LocalTreasures = { }
+
             });
 
             SpaceTimeLocations.Add(new SpaceTimeLocation
@@ -307,7 +312,9 @@ namespace Project_TARDIS
                 Description = "The Felandrian Plains are a common destination for tourist. " +
                   "Located just north of the equatorial line on the planet of Corlon, they" +
                   "provide excellent habitat for a rich ecosystem of flora and fauna.",
-                Accessable = true
+                Accessable = true,
+                LocalItems = {},
+                LocalTreasures = { }
             });
         }
 
@@ -321,18 +328,19 @@ namespace Project_TARDIS
                 Name = "Key",
                 GameObjectID = 1,
                 Description = "A gold encrusted chest with strange markings lay next to a strange blue rock.",
-                SpaceTimeLocationID = 3,
+                SpaceTimeLocationID = 3, // Felandrian Plains
                 HasValue = false,
                 Value = 0,
                 CanAddToInventory = true
             });
+            
 
             Items.Add(new Item
             {
                 Name = "Mirror",
                 GameObjectID = 2,
                 Description = "A full sized mirror with jewels decorating the border.",
-                SpaceTimeLocationID = 2,
+                SpaceTimeLocationID = 2,//Xantoria Market
                 HasValue = false,
                 Value = 0,
                 CanAddToInventory = false
@@ -341,9 +349,9 @@ namespace Project_TARDIS
             Items.Add(new Item
             {
                 Name = "Encabulator",
-                GameObjectID = 3,
+                GameObjectID = 3, 
                 Description = "A multi-function device carried by all Time Lords.",
-                SpaceTimeLocationID = 0,
+                SpaceTimeLocationID = 0, //Player
                 HasValue = true,
                 Value = 500,
                 CanAddToInventory = true
@@ -355,13 +363,14 @@ namespace Project_TARDIS
         /// </summary>
         private void IntializeUniverseTreasures()
         {
+
             Treasures.Add(new Treasure
             {
                 Name = "Trantorian Ruby",
                 TreasureType = Treasure.Type.Ruby,
-                GameObjectID = 1,
+                GameObjectID = 4,
                 Description = "A deep red ruby the size of an egg.",
-                SpaceTimeLocationID = 2,
+                SpaceTimeLocationID = 2, //Xantoria Market
                 HasValue = true,
                 Value = 25,
                 CanAddToInventory = true
@@ -371,15 +380,17 @@ namespace Project_TARDIS
             {
                 Name = "Lodestone",
                 TreasureType = Treasure.Type.Lodestone,
-                GameObjectID = 2,
+                GameObjectID = 5,
                 Description = "A deep red ruby the size of an egg.",
-                SpaceTimeLocationID = 3,
+                SpaceTimeLocationID = 3, // Felandrian Plains
                 HasValue = true,
                 Value = 15,
                 CanAddToInventory = true
             });
         }
 
+        
+    }
         #endregion
 
     }
