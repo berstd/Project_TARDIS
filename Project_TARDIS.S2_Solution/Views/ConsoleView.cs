@@ -437,75 +437,61 @@ namespace Project_TARDIS
                 // note: ReadKey argument set to "true" disables the echoing of the key press
                 //
                 ConsoleKeyInfo userResponse = Console.ReadKey(true);
-                switch (userResponse.KeyChar)
+                switch (Char.ToUpper(userResponse.KeyChar))
                 {
                     case 'A':
-                    case 'a':
                         travelerActionChoice = TravelerAction.LookAround;
                         usingMenu = false;
                         break;
                     case 'B':
-                    case 'b':
                         travelerActionChoice = TravelerAction.LookAt;
                         usingMenu = false;
                         break;
                     case 'C':
-                    case 'c':
                         travelerActionChoice = TravelerAction.PickUpItem;
                         usingMenu = false;
                         break;
                     case 'D':
-                    case 'd':
                         travelerActionChoice = TravelerAction.PickUpTreasure;
                         usingMenu = false;
                         break;
                     case 'E':
-                    case 'e':
                         travelerActionChoice = TravelerAction.PutDownItem;
                         usingMenu = false;
                         break;
                     case 'F':
-                    case 'f':
                         travelerActionChoice = TravelerAction.PutDownTreasure;
                         usingMenu = false;
                         break;
                     case 'G':
-                    case 'g':
                         travelerActionChoice = TravelerAction.Travel;
                         usingMenu = false;
                         break;
                     case 'H':
-                    case 'h':
                         travelerActionChoice = TravelerAction.TravelerInfo;
                         usingMenu = false;
                         break;
                     case 'I':
-                    case 'i':
                         travelerActionChoice = TravelerAction.TravelerInventory;
                         usingMenu = false;
                         break;
                     case 'J':
-                    case 'j':
                         travelerActionChoice = TravelerAction.TravelerTreasure;
                         usingMenu = false;
                         break;
                     case 'K':
-                    case 'k':
                         travelerActionChoice = TravelerAction.ListTARDISDestinations;
                         usingMenu = false;
                         break;
                     case 'L':
-                    case 'l':
                         travelerActionChoice = TravelerAction.ListItems;
                         usingMenu = false;
                         break;
                     case 'M':
-                    case 'm':
                         travelerActionChoice = TravelerAction.ListTreasures;
                         usingMenu = false;
                         break;
                     case 'Q':
-                    case 'q':
                         travelerActionChoice = TravelerAction.Exit;
                         usingMenu = false;
                         break;
@@ -682,7 +668,7 @@ namespace Project_TARDIS
                 ConsoleUtil.DisplayMessage("ID: " + treasure.GameObjectID);
                 ConsoleUtil.DisplayMessage("Name: " + treasure.Name);
                 ConsoleUtil.DisplayMessage("Description: " + treasure.Description);
-
+                
                 //
                 // all treasure in the traveler's inventory have a SpaceTimeLocationID of 0
                 //
