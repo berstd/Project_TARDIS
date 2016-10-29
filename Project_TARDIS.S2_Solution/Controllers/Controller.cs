@@ -82,7 +82,9 @@ namespace Project_TARDIS
             //
             while (_usingGame)
             {
-
+                int itemID;
+                int treasureID;
+                 
                 //
                 // get a menu choice from the ConsoleView object
                 //
@@ -102,13 +104,29 @@ namespace Project_TARDIS
                         _gameConsoleView.DisplayLookAt();
                         break;
                     case TravelerAction.PickUpItem:
-                        _gameConsoleView.DisplayPickUpItem();
+                        itemID = _gameConsoleView.DisplayPickUpItem();
+
+                        Item itemToPickup = _gameUniverse.GetItemtByID(itemID);
+
+                        itemToPickup.SpaceTimeLocationID = 0;
+                        _gameTraveler.TravelersItems.Add(itemToPickup);
                         break;
                     case TravelerAction.PickUpTreasure:
+                        treasureID = _gameConsoleView.DisplayPickUpTreasure();
 
+                        Treasure treasureToPickup = _gameUniverse.GetTreasureByID(treasureID);
+
+                        treasureToPickup.SpaceTimeLocationID = 0;
+                        _gameTraveler.TravelersTreasures.Add(treasureToPickup);
+                        break;
                         break;
                     case TravelerAction.PutDownItem:
+                        itemID = _gameConsoleView.DisplayPutDownItem();
 
+                        Item itemToPutDown = _gameUniverse.GetItemtByID(itemID);
+
+                        itemToPutDown.SpaceTimeLocationID = _gameTraveler.SpaceTimeLocationID;
+                        _gameTraveler.TravelersItems.Remove(itemToPutDown);
                         break;
                     case TravelerAction.PutDownTreasure:
 

@@ -729,6 +729,7 @@ namespace Project_TARDIS
             ConsoleUtil.HeaderText = "Traveler Inventory";
             ConsoleUtil.DisplayReset();
 
+            ConsoleUtil.DisplayMessage("");
             ConsoleUtil.DisplayMessage("Traveler Items");
             ConsoleUtil.DisplayMessage("");
 
@@ -797,6 +798,98 @@ namespace Project_TARDIS
             return itemID;
         }
 
+        /// <summary>
+        /// get the id of an item to remove from inventory
+        /// </summary>
+        /// <returns>id of desired item</returns>
+        public int DisplayPutDownItem()
+        {
+            ConsoleUtil.HeaderText = "Put Down Item";
+            ConsoleUtil.DisplayReset();
+
+            int itemID = 0;
+
+            int locationID;
+            locationID = _gameTraveler.SpaceTimeLocationID;
+
+            List<Item> itemsInInventory = new List<Item>();
+            itemsInInventory = _gameTraveler.TravelersItems;
+
+            ConsoleUtil.DisplayMessage("");
+            ConsoleUtil.DisplayMessage("Items in current Location");
+            ConsoleUtil.DisplayMessage("");
+
+            DisplayItemTable(itemsInInventory);
+
+            ConsoleUtil.DisplayPromptMessage("Enter Item Number:");
+            itemID = int.Parse(Console.ReadLine()); // TODO validate ID
+
+            DisplayContinuePrompt();
+
+            return itemID;
+        }
+
+        /// <summary>
+        /// get the id of a treasure to add to inventory
+        /// </summary>
+        /// <returns>id of desired treasure</returns>
+        public int DisplayPickUpTreasure()
+        {
+            ConsoleUtil.HeaderText = "Pick Up Treasure";
+            ConsoleUtil.DisplayReset();
+
+            int treasureID = 0;
+
+            int locationID;
+            locationID = _gameTraveler.SpaceTimeLocationID;
+
+            List<Treasure> treasuresInCurrentLocation = new List<Treasure>();
+            treasuresInCurrentLocation = _gameUniverse.GetTreasuresBySpaceTimeLocationID(locationID);
+
+            ConsoleUtil.DisplayMessage("");
+            ConsoleUtil.DisplayMessage("Items in current Location");
+            ConsoleUtil.DisplayMessage("");
+
+            DisplayTreasureTable(treasuresInCurrentLocation);
+
+            ConsoleUtil.DisplayPromptMessage("Enter Treasure Number:");
+            treasureID = int.Parse(Console.ReadLine()); // TODO validate ID
+
+            DisplayContinuePrompt();
+
+            return treasureID;
+        }
+
+        /// <summary>
+        /// get the id of a treasure to remove from inventory
+        /// </summary>
+        /// <returns>id of desired treasure</returns>
+        public int DisplayPutDownTreasure()
+        {
+            ConsoleUtil.HeaderText = "Put Down Treasure";
+            ConsoleUtil.DisplayReset();
+
+            int treasureID = 0;
+
+            int locationID;
+            locationID = _gameTraveler.SpaceTimeLocationID;
+
+            List<Treasure> treasuresInCurrentLocation = new List<Treasure>();
+            treasuresInCurrentLocation = _gameUniverse.GetTreasuresBySpaceTimeLocationID(locationID);
+
+            ConsoleUtil.DisplayMessage("");
+            ConsoleUtil.DisplayMessage("Items in current Location");
+            ConsoleUtil.DisplayMessage("");
+
+            DisplayTreasureTable(treasuresInCurrentLocation);
+
+            ConsoleUtil.DisplayPromptMessage("Enter Treasure Number:");
+            treasureID = int.Parse(Console.ReadLine()); // TODO validate ID
+
+            DisplayContinuePrompt();
+
+            return treasureID;
+        }
         #endregion
     }
 }
