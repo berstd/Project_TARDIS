@@ -48,9 +48,9 @@ namespace Project_TARDIS
             //
             // add all of the space-time locations and game objects to their lists
             // 
-            IntializeUniverseSpaceTimeLocations();
-            IntializeUniverseItems();
-            IntializeUniverseTreasures();
+            InitializeUniverseSpaceTimeLocations();
+            InitializeUniverseItems();
+            InitializeUniverseTreasures();
         }
 
         #endregion
@@ -226,51 +226,51 @@ namespace Project_TARDIS
         /// </summary>
         /// <param name="ID">space-time location ID</param>
         /// <returns>list of items in the specified location</returns>
-        //public List<Item> GetItemtsBySpaceTimeLocationID(int ID)
-        //{
-        //    // TODO validate SpaceTimeLocationID
+        public List<Item> GetItemsBySpaceTimeLocationID(int ID)
+        {
+            // TODO validate SpaceTimeLocationID
 
-        //    List<Item> itemsInSpaceTimeLocation = new List<Item>();
+            List<Item> itemsInSpaceTimeLocation = new List<Item>();
 
-        //    //
-        //    // run through the item list and put all items in the current location
-        //    // into a list
-        //    //
-        //    foreach (Item item in Items)
-        //    {
-        //        if (item.SpaceTimeLocationID == ID)
-        //        {
-        //            itemsInSpaceTimeLocation.Add(item);
-        //        }
-        //    }
+            //
+            // run through the item list and put all items in the current location
+            // into a list
+            //
+            foreach (Item item in Items)
+            {
+                if (item.SpaceTimeLocationID == ID)
+                {
+                    itemsInSpaceTimeLocation.Add(item);
+                }
+            }
 
-        //    return itemsInSpaceTimeLocation;
-        //}
+            return itemsInSpaceTimeLocation;
+        }
 
         /// get a list of treasures using a space-time location ID
         /// </summary>
         /// <param name="ID">space-time location ID</param>
         /// <returns>list of treasures in the specified location</returns>
-        //public List<Treasure> GetTreasuresBySpaceTimeLocationID(int ID)
-        //{
-        //    // TODO validate SpaceTimeLocationID
+        public List<Treasure> GetTreasuresBySpaceTimeLocationID(int ID)
+        {
+            // TODO validate SpaceTimeLocationID
 
-        //    List<Treasure> treasuresInSpaceTimeLocation = new List<Treasure>();
+            List<Treasure> treasuresInSpaceTimeLocation = new List<Treasure>();
 
-        //    //
-        //    // run through the treasure list and put all items in the current location
-        //    // into a list
-        //    //
-        //    foreach (Treasure treasure in Treasures)
-        //    {
-        //        if (treasure.SpaceTimeLocationID == ID)
-        //        {
-        //            treasuresInSpaceTimeLocation.Add(treasure);
-        //        }
-        //    }
+            //
+            // run through the treasure list and put all items in the current location
+            // into a list
+            //
+            foreach (Treasure treasure in Treasures)
+            {
+                if (treasure.SpaceTimeLocationID == ID)
+                {
+                    treasuresInSpaceTimeLocation.Add(treasure);
+                }
+            }
 
-        //    return treasuresInSpaceTimeLocation;
-        //}
+            return treasuresInSpaceTimeLocation;
+        }
 
         #endregion
 
@@ -279,7 +279,7 @@ namespace Project_TARDIS
         /// <summary>
         /// initialize the universe with all of the space-time locations
         /// </summary>
-        private void IntializeUniverseSpaceTimeLocations()
+        private void InitializeUniverseSpaceTimeLocations()
         {
             SpaceTimeLocations.Add(new SpaceTimeLocation
             {
@@ -321,7 +321,7 @@ namespace Project_TARDIS
         /// <summary>
         /// initialize the universe with all of the items
         /// </summary>
-        private void IntializeUniverseItems()
+        private void InitializeUniverseItems()
         {
             Items.Add(new Item
             {
@@ -361,7 +361,7 @@ namespace Project_TARDIS
         /// <summary>
         /// initialize the universe with all of the treasures
         /// </summary>
-        private void IntializeUniverseTreasures()
+        private void InitializeUniverseTreasures()
         {
 
             Treasures.Add(new Treasure
@@ -393,6 +393,5 @@ namespace Project_TARDIS
     }
         #endregion
 
-    }
 }
 

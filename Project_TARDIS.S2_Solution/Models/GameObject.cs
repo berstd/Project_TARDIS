@@ -41,7 +41,13 @@ namespace Project_TARDIS
 
 
         #region METHODS
-
+        public override string ToString()
+        {
+            if (HasValue)
+                return Name + " ($" + Value + ") - " + Description;
+            else
+                return Name + " - " + Description;
+        }
 
 
         #endregion

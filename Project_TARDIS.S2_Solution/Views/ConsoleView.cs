@@ -51,6 +51,11 @@ namespace Project_TARDIS
             ConsoleUtil.HeaderText = "The TARDIS Project";
         }
 
+        private int currentSptID() { return _gameTraveler.SpaceTimeLocationID; }
+        private SpaceTimeLocation currentLocation() { return _gameUniverse.GetSpaceTimeLocationByID(currentSptID()); }
+        private List<Item> localItems() { return _gameUniverse.GetItemsBySpaceTimeLocationID(currentSptID()); }
+        private List<Treasure> localTreasures() { return _gameUniverse.GetTreasuresBySpaceTimeLocationID(currentSptID()); }
+
         /// <summary>
         /// display the Continue prompt
         /// </summary>
@@ -355,29 +360,11 @@ namespace Project_TARDIS
             //
             // item name and id
             //
+            int i = 1;
             foreach (GameObject obj in objs)
             {
-                ConsoleUtil.DisplayMessage(obj.GameObjectID.ToString().PadRight(10) + obj.Name.PadRight(20));
-            }
-        }
-
-        /// <summary>
-        /// generate a table of treasure names and ids
-        /// </summary>
-        public void DisplayTreasureTable(List<Treasure> treasures)
-        {
-            //
-            // table headings
-            //
-            ConsoleUtil.DisplayMessage("ID".PadRight(10) + "Name".PadRight(20));
-            ConsoleUtil.DisplayMessage("---".PadRight(10) + "-------------".PadRight(20));
-
-            //
-            // treasure name and id
-            //
-            foreach (Treasure treasure in treasures)
-            {
-                ConsoleUtil.DisplayMessage(treasure.GameObjectID.ToString().PadRight(10) + treasure.Name.PadRight(20));
+                ConsoleUtil.DisplayMessage(i.ToString().PadRight(10) + obj.Name.PadRight(20));
+                i++;
             }
         }
 
@@ -520,22 +507,8 @@ namespace Project_TARDIS
         {
             ConsoleUtil.HeaderText = "Current Space-Time Location Info";
             ConsoleUtil.DisplayReset();
-
-            ConsoleUtil.DisplayMessage(_gameUniverse.GetSpaceTimeLocationByID(_gameTraveler.SpaceTimeLocationID).Description);
-
-            ConsoleUtil.DisplayMessage("");
-            ConsoleUtil.DisplayMessage("Items in current location.");
-            foreach (Item item in _gameUniverse.GetItemtsBySpaceTimeLocationID(_gameTraveler.SpaceTimeLocationID))
-            {
-                ConsoleUtil.DisplayMessage(item.Name + " - " + item.Description);
-            }
-
-            ConsoleUtil.DisplayMessage("");
-            ConsoleUtil.DisplayMessage("Treasures in current location.");
-            foreach (Treasure treasure in _gameUniverse.GetTreasuresBySpaceTimeLocationID(_gameTraveler.SpaceTimeLocationID))
-            {
-                ConsoleUtil.DisplayMessage(treasure.Name + " - " + treasure.Description);
-            }
+            ConsoleUtil.DisplayHeading(currentLocation().Name);
+            ConsoleUtil.DisplayMessage(currentLocation().Description);
 
             DisplayContinuePrompt();
         }
@@ -545,123 +518,67 @@ namespace Project_TARDIS
         /// </summary>
         public void DisplayLookAt()
         {
-            int currentSptID = _gameTraveler.SpaceTimeLocationID;
-            List<GameObject> itemsInSpt = new List<GameObject>();
-            Item itemToLookAt = new Item();
-
-            itemsInSpt = _gameUniverse.GetItemtsBySpaceTimeLocationID(currentSptID);
-
-            ConsoleUtil.HeaderText = "Look at a Game Items in Current Location";
+            ConsoleUtil.HeaderText = "Nearby Items and Treasure";
             ConsoleUtil.DisplayReset();
+            ConsoleUtil.DisplayHeading("--- "+currentLocation().Name+" ---");
 
-            ConsoleUtil.DisplayMessage(_gameUniverse.GetSpaceTimeLocationByID(currentSptID).Name);
-
-            if (itemsInSpt != null)
+            ConsoleUtil.DisplayMessage($"> You see {localItems().Count} item(s)");
+            foreach (Item item in localItems())
             {
-                ConsoleUtil.DisplayMessage("");
-                ConsoleUtil.DisplayMessage("Items in current location.");
-                DisplayObjectTable(itemsInSpt);
-
-                ConsoleUtil.DisplayPromptMessage("Enter the item number to view");
-                // TODO code in validation
-                int itemIDChoice;
-
-                if (int.TryParse(Console.ReadLine(), out itemIDChoice))
-                {
-                    itemToLookAt = _gameUniverse.GetItemtByID(itemIDChoice);
-                    ConsoleUtil.DisplayMessage(itemToLookAt.Description);
-
-                    DisplayContinuePrompt();
-                }
-            }
-            else
-            {
-                ConsoleUtil.DisplayMessage("There are no items here");
+                ConsoleUtil.DisplayMessage(item.ToString());
             }
 
+            ConsoleUtil.DisplayMessage("");
+            ConsoleUtil.DisplayMessage($"> You see {localTreasures().Count} treasure(s)");
+            foreach (Treasure treasure in localTreasures())
+            {
+                ConsoleUtil.DisplayMessage(treasure.ToString());
+            }
+            DisplayContinuePrompt();
         }
 
-        /// <summary>
-        /// display information about items and treasures in the current space-time location
-        /// </summary>
-        public void DisplayLookAtItem()
-        {
-            int currentSptID = _gameTraveler.SpaceTimeLocationID;
-            List<Item> itemsInSpt = new List<Item>();
-            Item itemToLookAt = new Item();
 
-            itemsInSpt = _gameUniverse.GetItemtsBySpaceTimeLocationID(currentSptID);
+        ///// <summary>
+        ///// display information about items and treasures in the current space-time location
+        ///// </summary>
+        //public void DisplayLookAtTreasure()
+        //{
+        //    int currentSptID = _gameTraveler.SpaceTimeLocationID;
+        //    List<Treasure> treasuresInSpt = new List<Treasure>();
+        //    Treasure treasureToLookAt = new Treasure();
 
-            ConsoleUtil.HeaderText = "Look at a Game Items in Current Location";
-            ConsoleUtil.DisplayReset();
+        //    treasuresInSpt = _gameUniverse.GetTreasuresBySpaceTimeLocationID(currentSptID);
 
-            ConsoleUtil.DisplayMessage(_gameUniverse.GetSpaceTimeLocationByID(currentSptID).Name);
+        //    ConsoleUtil.HeaderText = "Look at a Game Items in Current Location";
+        //    ConsoleUtil.DisplayReset();
 
-            if (itemsInSpt != null)
-            {
-                ConsoleUtil.DisplayMessage("");
-                ConsoleUtil.DisplayMessage("Items in current location.");
-                DisplayObjectTable(itemsInSpt);
+        //    ConsoleUtil.DisplayMessage(_gameUniverse.GetSpaceTimeLocationByID(currentSptID).Name);
 
-                ConsoleUtil.DisplayPromptMessage("Enter the item number to view"); 
-                // TODO code in validation
-                int itemIDChoice;
+        //    if (treasuresInSpt != null)
+        //    {
+        //        ConsoleUtil.DisplayMessage("");
+        //        ConsoleUtil.DisplayMessage("Treasures in current location.");
+        //        DisplayTreasureTable(treasuresInSpt);
 
-                if (int.TryParse(Console.ReadLine(), out itemIDChoice))
-                {
-                    itemToLookAt = _gameUniverse.GetItemtByID(itemIDChoice);
-                    ConsoleUtil.DisplayMessage(itemToLookAt.Description);
+        //        ConsoleUtil.DisplayPromptMessage(
+        //            "Enter the treasure number to view or press the Enter key to move on. "
+        //            ); // TODO code in validation
+        //        int treasureIDChoice;
 
-                    DisplayContinuePrompt();
-                }
-            }
-            else
-            {
-                ConsoleUtil.DisplayMessage("There are no items here");
-            }
+        //        if (int.TryParse(Console.ReadLine(), out treasureIDChoice))
+        //        {
+        //            treasureToLookAt = _gameUniverse.GetTreasureByID(treasureIDChoice);
+        //            ConsoleUtil.DisplayMessage(treasureToLookAt.Description);
 
-        }
+        //            DisplayContinuePrompt();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        ConsoleUtil.DisplayMessage("There's no treasure here");
+        //    }
+        //}
 
-        /// <summary>
-        /// display information about items and treasures in the current space-time location
-        /// </summary>
-        public void DisplayLookAtTreasure()
-        {
-            int currentSptID = _gameTraveler.SpaceTimeLocationID;
-            List<Treasure> treasuresInSpt = new List<Treasure>();
-            Treasure treasureToLookAt = new Treasure();
-
-            treasuresInSpt = _gameUniverse.GetTreasuresBySpaceTimeLocationID(currentSptID);
-
-            ConsoleUtil.HeaderText = "Look at a Game Items in Current Location";
-            ConsoleUtil.DisplayReset();
-
-            ConsoleUtil.DisplayMessage(_gameUniverse.GetSpaceTimeLocationByID(currentSptID).Name);
-
-            if (treasuresInSpt != null)
-            {
-                ConsoleUtil.DisplayMessage("");
-                ConsoleUtil.DisplayMessage("Treasures in current location.");
-                DisplayTreasureTable(treasuresInSpt);
-
-                ConsoleUtil.DisplayPromptMessage(
-                    "Enter the treasure number to view or press the Enter key to move on. "
-                    ); // TODO code in validation
-                int treasureIDChoice;
-
-                if (int.TryParse(Console.ReadLine(), out treasureIDChoice))
-                {
-                    treasureToLookAt = _gameUniverse.GetTreasureByID(treasureIDChoice);
-                    ConsoleUtil.DisplayMessage(treasureToLookAt.Description);
-
-                    DisplayContinuePrompt();
-                }
-            }
-            else
-            {
-                ConsoleUtil.DisplayMessage("There's no treasure here");
-            }
-        }
         /// <summary>
         /// display a list of all TARDIS destinations
         /// <summary>
@@ -730,7 +647,7 @@ namespace Project_TARDIS
                 ConsoleUtil.DisplayMessage("ID: " + treasure.GameObjectID);
                 ConsoleUtil.DisplayMessage("Name: " + treasure.Name);
                 ConsoleUtil.DisplayMessage("Description: " + treasure.Description);
-                
+
                 //
                 // all treasure in the traveler's inventory have a SpaceTimeLocationID of 0
                 //
@@ -814,37 +731,156 @@ namespace Project_TARDIS
             DisplayContinuePrompt();
         }
 
-        /// <summary>
-        /// get the id of an item to add to inventory
-        /// </summary>
-        /// <returns>id of desired item</returns>
-        public int DisplayPickUpItem()
+
+        public Item DisplayPickUpItem()
         {
             ConsoleUtil.HeaderText = "Pick Up Item";
             ConsoleUtil.DisplayReset();
 
-            int itemID = 0;
+            if (localItems().Count == 0)
+            {
+                ConsoleUtil.DisplayMessage("There's no items here");
+                DisplayContinuePrompt();
+                return null;
+            }
+            else
+            {
+                ConsoleUtil.DisplayMessage("");
+                ConsoleUtil.DisplayMessage("Items in current Location");
+                ConsoleUtil.DisplayMessage("");
+                Item choice = DisplayChooseFromList<Item>("Which item to pick up?", localItems());
+                ConsoleUtil.DisplayMessage("> Picked up a " + choice.Name);
+                DisplayContinuePrompt();
 
-            int locationID;
-            locationID = _gameTraveler.SpaceTimeLocationID;
+                return choice;
+            }
+        }
+        public Item DisplayPutDownItem()
+        {
+            ConsoleUtil.HeaderText = "Put Down Item";
+            ConsoleUtil.DisplayReset();
 
-            List<Item> itemsInCurrentLocation = new List<Item>();
-            itemsInCurrentLocation = _gameUniverse.GetItemtsBySpaceTimeLocationID(locationID);
+            if (_gameTraveler.TravelersItems.Count == 0)
+            {
+                ConsoleUtil.DisplayMessage("You have no items");
+                DisplayContinuePrompt();
+                return null;
+            }
+            else
+            {
+                ConsoleUtil.DisplayMessage("");
+                ConsoleUtil.DisplayMessage("Items in inventory");
+                ConsoleUtil.DisplayMessage("");
+                Item choice = DisplayChooseFromList<Item>("Which item to put down?", _gameTraveler.TravelersItems);
+                ConsoleUtil.DisplayMessage(">Put down a " + choice.Name);
+                DisplayContinuePrompt();
 
-            ConsoleUtil.DisplayMessage("");
-            ConsoleUtil.DisplayMessage("Items in current Location");
-            ConsoleUtil.DisplayMessage("");
+                return choice;
+            }
+        }
+        /// <summary>
+        /// get the id of an treasure to add to inventory
+        /// </summary>
+        /// <returns>id of desired item</returns>
+        public Treasure DisplayPickUpTreasure()
+        {
+            ConsoleUtil.HeaderText = "Pick Up Treasure";
+            ConsoleUtil.DisplayReset();
 
-            DisplayObjectTable(itemsInCurrentLocation);
+            if (localTreasures().Count == 0)
+            {
+                ConsoleUtil.DisplayMessage("There's no treasure here");
+                DisplayContinuePrompt();
+                return null;
+            }
+            else
+            {
+                ConsoleUtil.DisplayMessage("");
+                ConsoleUtil.DisplayMessage("Treasure in current Location");
+                ConsoleUtil.DisplayMessage("");
+                Treasure choice = DisplayChooseFromList<Treasure>("Which treasure to pick up?", localTreasures());
+                ConsoleUtil.DisplayMessage("> Picked up a " + choice.Name);
+                DisplayContinuePrompt();
 
-            ConsoleUtil.DisplayPromptMessage("Enter Item Number:");
-            itemID = int.Parse(Console.ReadLine()); // TODO validate ID
-
-            DisplayContinuePrompt();
-
-            return itemID;
+                return choice;
+            }
         }
 
+        public Treasure DisplayPutDownTreasure()
+        {
+            ConsoleUtil.HeaderText = "Put Down Treasure";
+            ConsoleUtil.DisplayReset();
+
+            if (_gameTraveler.TravelersTreasures.Count == 0)
+            {
+                ConsoleUtil.DisplayMessage("You have no treasures");
+                DisplayContinuePrompt();
+                return null;
+            }
+            else
+            {
+                ConsoleUtil.DisplayMessage("");
+                ConsoleUtil.DisplayMessage("Your Treasures");
+                ConsoleUtil.DisplayMessage("");
+                Treasure choice = DisplayChooseFromList<Treasure>("Which treasure to put down?", _gameTraveler.TravelersTreasures);
+                ConsoleUtil.DisplayMessage(">Put down a " + choice.Name);
+                DisplayContinuePrompt();
+
+                return choice;
+            }
+        }
         #endregion
+
+        /// <summary>
+        /// generate a table of item names and ids
+        /// </summary>
+        public T DisplayChooseFromList<T>(string prompt, List<T> objs) where T : GameObject
+        {
+            int i = 0;
+            foreach (T obj in objs)
+            {
+                i++;
+                ConsoleUtil.DisplayMessage("\t" + i + ". " + obj.Name);
+
+            }
+
+            int objIndex = 0;
+            if (i == 0)
+            {
+                return null;
+            }
+            Console.WriteLine();
+            objIndex = DisplayGetIntegerInRange(1, i, prompt);
+            return objs[objIndex - 1];
+        }
+
+        private int DisplayGetIntegerInRange(int min, int max, string prompt)
+        {
+            int integer = 0;
+
+            bool validNumber = false;
+
+            while (!validNumber)
+            {
+                ConsoleUtil.DisplayPromptMessage(prompt);
+                if (int.TryParse(Console.ReadLine(), out integer))
+                {
+                    if (integer >= min && integer <= max)
+                    {
+                        validNumber = true;
+                    }
+                    else
+                    {
+                        ConsoleUtil.DisplayMessage($"Input out of range ({min},{max})");
+                    }
+                }
+                else
+                {
+                    ConsoleUtil.DisplayMessage("Input need to be entered as integers. (1,2,3,etc)");
+                }
+            }
+
+            return integer;
+        }
     }
 }

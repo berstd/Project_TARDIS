@@ -127,7 +127,17 @@ namespace Project_TARDIS
 
             Console.WriteLine();
         }
-
+        /// <summary>
+        /// display a message in the message area with a new line and some accents
+        /// </summary>
+        /// <param name="message">string to display</param>
+        public static void DisplayHeading(string message)
+        {
+            DisplayMessage("------------------------------------");
+            DisplayMessage(message);
+            DisplayMessage("------------------------------------");
+            Console.WriteLine();
+        }
         /// <summary>
         /// display a message in the message area with a new line
         /// </summary>
