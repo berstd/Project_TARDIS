@@ -520,7 +520,7 @@ namespace Project_TARDIS
         {
             ConsoleUtil.HeaderText = "Nearby Items and Treasure";
             ConsoleUtil.DisplayReset();
-            ConsoleUtil.DisplayHeading("--- "+currentLocation().Name+" ---");
+            ConsoleUtil.DisplayHeading(currentLocation().Name);
 
             ConsoleUtil.DisplayMessage($"> You see {localItems().Count} item(s)");
             foreach (Item item in localItems())
@@ -536,48 +536,6 @@ namespace Project_TARDIS
             }
             DisplayContinuePrompt();
         }
-
-
-        ///// <summary>
-        ///// display information about items and treasures in the current space-time location
-        ///// </summary>
-        //public void DisplayLookAtTreasure()
-        //{
-        //    int currentSptID = _gameTraveler.SpaceTimeLocationID;
-        //    List<Treasure> treasuresInSpt = new List<Treasure>();
-        //    Treasure treasureToLookAt = new Treasure();
-
-        //    treasuresInSpt = _gameUniverse.GetTreasuresBySpaceTimeLocationID(currentSptID);
-
-        //    ConsoleUtil.HeaderText = "Look at a Game Items in Current Location";
-        //    ConsoleUtil.DisplayReset();
-
-        //    ConsoleUtil.DisplayMessage(_gameUniverse.GetSpaceTimeLocationByID(currentSptID).Name);
-
-        //    if (treasuresInSpt != null)
-        //    {
-        //        ConsoleUtil.DisplayMessage("");
-        //        ConsoleUtil.DisplayMessage("Treasures in current location.");
-        //        DisplayTreasureTable(treasuresInSpt);
-
-        //        ConsoleUtil.DisplayPromptMessage(
-        //            "Enter the treasure number to view or press the Enter key to move on. "
-        //            ); // TODO code in validation
-        //        int treasureIDChoice;
-
-        //        if (int.TryParse(Console.ReadLine(), out treasureIDChoice))
-        //        {
-        //            treasureToLookAt = _gameUniverse.GetTreasureByID(treasureIDChoice);
-        //            ConsoleUtil.DisplayMessage(treasureToLookAt.Description);
-
-        //            DisplayContinuePrompt();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        ConsoleUtil.DisplayMessage("There's no treasure here");
-        //    }
-        //}
 
         /// <summary>
         /// display a list of all TARDIS destinations
@@ -876,7 +834,7 @@ namespace Project_TARDIS
                 }
                 else
                 {
-                    ConsoleUtil.DisplayMessage("Input need to be entered as integers. (1,2,3,etc)");
+                    ConsoleUtil.DisplayMessage("Input need to be entered as integers. (1, 2, 3, etc)");
                 }
             }
 

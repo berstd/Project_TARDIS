@@ -131,9 +131,6 @@ namespace Project_TARDIS
                         //
                         // TODO write a DisplayPickUpItem method in the ConsoleView that lists game objects in a location and prompts the traveler for an ID that is returned. Then adds the object to the traveler's inventory by adding them to the traveler's item list and setting the object's LocationID to 0.
                         //
-                        //Item PickedUpItem = _gameConsoleView.DisplayPickUpItem();
-                        //_gameTraveler.TravelersItems.Add(PickedUpItem);
-                        //PickedUpItem.SpaceTimeLocationID = 0;
                         MoveItem(_gameConsoleView.DisplayPickUpItem(), 0);
                         break;
                     case TravelerAction.PickUpTreasure:
@@ -188,13 +185,24 @@ namespace Project_TARDIS
 
         private void MoveItem(Item item, int newLocation)
         {
-            if (item != null && item.CanAddToInventory) { 
+            if (item != null && item.CanAddToInventory) {
+                bool addingToPlayer = (newLocation == 0);
+
+                // Disguise kit functionality
+                if (item.Name.Equals("Xantorian Disguise Kit"))
+                {
+                    if (addingToPlayer)
+                        _gameTraveler.Race = Traveler.RaceType.Xantorian;
+                    else
+                        _gameTraveler.Race = Traveler.RaceType.Human;
+                }
+
                 // If this treasure is in Player inventory it should be removed
                 if (item.SpaceTimeLocationID == 0)
                     _gameTraveler.TravelersItems.Remove(item);
 
                 // If newLocation is 0, treasure should be added to Player inventory
-                if (newLocation == 0)
+                if (addingToPlayer)
                     _gameTraveler.TravelersItems.Add(item);
 
                 // Regardless, updating SpaceTimeLocationID is what actually "moves" the object in the universe

@@ -356,6 +356,17 @@ namespace Project_TARDIS
                 Value = 500,
                 CanAddToInventory = true
             });
+
+            Items.Add(new Item
+            {
+                Name = "Xantorian Disguise Kit",
+                GameObjectID = 4,
+                Description = "When picked up, your race become Xantorian.",
+                SpaceTimeLocationID = 1, //TARDIS Base
+                HasValue = false,
+                Value = 0,
+                CanAddToInventory = true
+            });
         }
 
         /// <summary>
@@ -363,12 +374,11 @@ namespace Project_TARDIS
         /// </summary>
         private void InitializeUniverseTreasures()
         {
-
             Treasures.Add(new Treasure
             {
                 Name = "Trantorian Ruby",
                 TreasureType = Treasure.Type.Ruby,
-                GameObjectID = 4,
+                GameObjectID = 5,
                 Description = "A deep red ruby the size of an egg.",
                 SpaceTimeLocationID = 2, //Xantoria Market
                 HasValue = true,
@@ -380,11 +390,23 @@ namespace Project_TARDIS
             {
                 Name = "Lodestone",
                 TreasureType = Treasure.Type.Lodestone,
-                GameObjectID = 5,
-                Description = "A deep red ruby the size of an egg.",
+                GameObjectID = 6,
+                Description = "A naturally magnetized piece of the mineral magnetite.",
                 SpaceTimeLocationID = 3, // Felandrian Plains
                 HasValue = true,
                 Value = 15,
+                CanAddToInventory = true
+            });
+
+            Treasures.Add(new Treasure
+            {
+                Name = "Gold Coin",
+                TreasureType = Treasure.Type.GoldCoin,
+                GameObjectID = 7,
+                Description = "A single gold coin",
+                SpaceTimeLocationID = 1, // TARDIS Base
+                HasValue = true,
+                Value = 1,
                 CanAddToInventory = true
             });
         }
