@@ -29,6 +29,11 @@ namespace Project_TARDIS
         //
         public List<Treasure> Treasures { get; set; }
 
+        //
+        // list of all NPCs
+        //
+        public List<NPC> NPCs { get; set; }
+
         #endregion
 
         #region ***** constructor *****
@@ -44,6 +49,7 @@ namespace Project_TARDIS
             this.SpaceTimeLocations = new List<SpaceTimeLocation>();
             this.Items = new List<Item>();
             this.Treasures = new List<Treasure>();
+            this.NPCs = new List<NPC>();
 
             //
             // add all of the space-time locations and game objects to their lists
@@ -51,6 +57,7 @@ namespace Project_TARDIS
             IntializeUniverseSpaceTimeLocations();
             IntializeUniverseItems();
             IntializeUniverseTreasures();
+            IntializeUniverseNPCs();
         }
 
         #endregion
@@ -156,7 +163,7 @@ namespace Project_TARDIS
         /// </summary>
         /// <param name="ID">game object ID</param>
         /// <returns>requested item object</returns>
-        public Item GetItemtByID(int ID)
+        public Item GetItemByID(int ID)
         {
             Item requestedItem = null;
 
@@ -226,7 +233,7 @@ namespace Project_TARDIS
         /// </summary>
         /// <param name="ID">space-time location ID</param>
         /// <returns>list of items in the specified location</returns>
-        public List<Item> GetItemtsBySpaceTimeLocationID(int ID)
+        public List<Item> GetItemsBySpaceTimeLocationID(int ID)
         {
             // TODO validate SpaceTimeLocationID
 
@@ -246,7 +253,30 @@ namespace Project_TARDIS
 
             return itemsInSpaceTimeLocation;
         }
+        /// get a list of items using a space-time location ID
+        /// </summary>
+        /// <param name="ID">space-time location ID</param>
+        /// <returns>list of items in the specified location</returns>
+        public List<NPC> GetNPCsBySpaceTimeLocationID(int ID)
+        {
+            // TODO validate SpaceTimeLocationID
 
+            List<NPC> NPCsInSpaceTimeLocation = new List<NPC>();
+
+            //
+            // run through the item list and put all items in the current location
+            // into a list
+            //
+            foreach (NPC npc in NPCs)
+            {
+                if (npc.SpaceTimeLocationID == ID)
+                {
+                    NPCsInSpaceTimeLocation.Add(npc);
+                }
+            }
+
+            return NPCsInSpaceTimeLocation;
+        }
         /// get a list of treasures using a space-time location ID
         /// </summary>
         /// <param name="ID">space-time location ID</param>
@@ -377,6 +407,27 @@ namespace Project_TARDIS
                 HasValue = true,
                 Value = 15,
                 CanAddToInventory = true
+            });
+        }
+        /// <summary>
+        /// initialize the universe with all of the treasures
+        /// </summary>
+        private void IntializeUniverseNPCs()
+        {
+            NPCs.Add(new NPC
+            {
+                Name = "Boblek",
+                Race = Character.RaceType.Dalek,
+                SpaceTimeLocationID = 2,
+                Message = "Hi I'm Boblek."
+            });
+
+            NPCs.Add(new NPC
+            {
+                Name = "Quietlek",
+                Race = Character.RaceType.Dalek,
+                SpaceTimeLocationID = 3,
+                Message = ""
             });
         }
 

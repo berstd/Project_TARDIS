@@ -40,11 +40,28 @@ namespace Project_TARDIS
 
         #endregion
 
-        #region METHODS
+        #region DYLAN
+        public void DisplayTalkTo(NPC npc)
+        {
+            
+            ConsoleUtil.HeaderText = "Talking to "+npc.Name;
+            ConsoleUtil.DisplayReset();
+            if(npc.HasMessage)
+            {
+                ConsoleUtil.DisplayMessage($"{npc.Name} says: \"{npc.Message}\"");
+            } else
+            {
+                ConsoleUtil.DisplayMessage($"{npc.Name} has nothing to say right now");
+            }
+            DisplayContinuePrompt();
+        }
+        #endregion
 
-        /// <summary>
-        /// initialize all console settings
-        /// </summary>
+            #region METHODS
+
+            /// <summary>
+            /// initialize all console settings
+            /// </summary>
         private void InitializeConsole()
         {
             ConsoleUtil.WindowTitle = "The TARDIS Project";
@@ -409,6 +426,7 @@ namespace Project_TARDIS
                     "\t" + "**************************" + Environment.NewLine +
                     "\t" + "A. Look Around" + Environment.NewLine +
                     "\t" + "B. Look At" + Environment.NewLine +
+                    "\t" + "N. Talk To" + Environment.NewLine +
                     "\t" + "C. Pick Up Item" + Environment.NewLine +
                     "\t" + "D. Pick Up Treasure" + Environment.NewLine +
                     "\t" + "E. Put Down Item" + Environment.NewLine +
@@ -447,6 +465,11 @@ namespace Project_TARDIS
                     case 'B':
                     case 'b':
                         travelerActionChoice = TravelerAction.LookAt;
+                        usingMenu = false;
+                        break;
+                    case 'N':
+                    case 'n':
+                        travelerActionChoice = TravelerAction.TalkTo;
                         usingMenu = false;
                         break;
                     case 'C':
@@ -539,7 +562,7 @@ namespace Project_TARDIS
 
             ConsoleUtil.DisplayMessage("");
             ConsoleUtil.DisplayMessage("Items in current location.");
-            foreach (Item item in _gameUniverse.GetItemtsBySpaceTimeLocationID(_gameTraveler.SpaceTimeLocationID))
+            foreach (Item item in _gameUniverse.GetItemsBySpaceTimeLocationID(_gameTraveler.SpaceTimeLocationID))
             {
                 ConsoleUtil.DisplayMessage(item.Name + " - " + item.Description);
             }
@@ -549,6 +572,13 @@ namespace Project_TARDIS
             foreach (Treasure treasure in _gameUniverse.GetTreasuresBySpaceTimeLocationID(_gameTraveler.SpaceTimeLocationID))
             {
                 ConsoleUtil.DisplayMessage(treasure.Name + " - " + treasure.Description);
+            }
+
+            ConsoleUtil.DisplayMessage("");
+            ConsoleUtil.DisplayMessage("NPCs in current location.");
+            foreach (NPC npc in _gameUniverse.GetNPCsBySpaceTimeLocationID(_gameTraveler.SpaceTimeLocationID))
+            {
+                ConsoleUtil.DisplayMessage(npc.Name);
             }
 
             DisplayContinuePrompt();
@@ -565,7 +595,7 @@ namespace Project_TARDIS
             Item itemToLookAt = new Item();
             Treasure treasureToLookAt = new Treasure();
 
-            itemsInSpt = _gameUniverse.GetItemtsBySpaceTimeLocationID(currentSptID);
+            itemsInSpt = _gameUniverse.GetItemsBySpaceTimeLocationID(currentSptID);
             treasuresInSpt = _gameUniverse.GetTreasuresBySpaceTimeLocationID(currentSptID);
 
             ConsoleUtil.HeaderText = "Look at a Game Items in Current Location";
@@ -586,7 +616,7 @@ namespace Project_TARDIS
 
                 if (int.TryParse(Console.ReadLine(), out itemIDChoice))
                 {
-                    itemToLookAt = _gameUniverse.GetItemtByID(itemIDChoice);
+                    itemToLookAt = _gameUniverse.GetItemByID(itemIDChoice);
                     ConsoleUtil.DisplayMessage(itemToLookAt.Description);
 
                     DisplayContinuePrompt();
@@ -782,7 +812,7 @@ namespace Project_TARDIS
             locationID = _gameTraveler.SpaceTimeLocationID;
 
             List<Item> itemsInCurrentLocation = new List<Item>();
-            itemsInCurrentLocation = _gameUniverse.GetItemtsBySpaceTimeLocationID(locationID);
+            itemsInCurrentLocation = _gameUniverse.GetItemsBySpaceTimeLocationID(locationID);
 
             ConsoleUtil.DisplayMessage("");
             ConsoleUtil.DisplayMessage("Items in current Location");

@@ -103,10 +103,15 @@ namespace Project_TARDIS
                     case TravelerAction.LookAt:
                         _gameConsoleView.DisplayLookAt();
                         break;
+                    case TravelerAction.TalkTo:
+                        NPC nearbyNPC = _gameUniverse.GetNPCsBySpaceTimeLocationID(_gameTraveler.SpaceTimeLocationID)[0];
+                        _gameConsoleView.DisplayTalkTo(nearbyNPC);
+                        
+                        break;
                     case TravelerAction.PickUpItem:
                         itemID = _gameConsoleView.DisplayPickUpItem();
 
-                        Item itemToPickup = _gameUniverse.GetItemtByID(itemID);
+                        Item itemToPickup = _gameUniverse.GetItemByID(itemID);
 
                         itemToPickup.SpaceTimeLocationID = 0;
                         _gameTraveler.TravelersItems.Add(itemToPickup);
@@ -119,17 +124,21 @@ namespace Project_TARDIS
                         treasureToPickup.SpaceTimeLocationID = 0;
                         _gameTraveler.TravelersTreasures.Add(treasureToPickup);
                         break;
-                        break;
                     case TravelerAction.PutDownItem:
                         itemID = _gameConsoleView.DisplayPutDownItem();
 
-                        Item itemToPutDown = _gameUniverse.GetItemtByID(itemID);
+                        Item itemToPutDown = _gameUniverse.GetItemByID(itemID);
 
                         itemToPutDown.SpaceTimeLocationID = _gameTraveler.SpaceTimeLocationID;
                         _gameTraveler.TravelersItems.Remove(itemToPutDown);
                         break;
                     case TravelerAction.PutDownTreasure:
+                        treasureID = _gameConsoleView.DisplayPutDownItem();
 
+                        Treasure treasureToPutDown = _gameUniverse.GetTreasureByID(treasureID);
+
+                        treasureToPutDown.SpaceTimeLocationID = _gameTraveler.SpaceTimeLocationID;
+                        _gameTraveler.TravelersTreasures.Remove(treasureToPutDown);
                         break;
                     case TravelerAction.Travel:
                         _gameTraveler.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
@@ -193,7 +202,7 @@ namespace Project_TARDIS
         {
             Item item;
 
-            item = _gameUniverse.GetItemtByID(itemID);
+            item = _gameUniverse.GetItemByID(itemID);
             item.SpaceTimeLocationID = 0;
 
             _gameTraveler.TravelersItems.Add(item);

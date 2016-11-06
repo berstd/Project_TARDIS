@@ -18,7 +18,8 @@ namespace Project_TARDIS
             None,
             Human,
             Thorian,
-            Xantorian
+            Xantorian,
+            Dalek
         }
 
         #endregion
