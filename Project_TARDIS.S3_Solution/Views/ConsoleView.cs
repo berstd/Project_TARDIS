@@ -259,6 +259,14 @@ namespace Project_TARDIS
             return travelersRace;
         }
 
+        public void DisplaySpawn()
+        {
+            Console.WriteLine("You died!");
+            Console.WriteLine("Sending you back to base.");
+
+            DisplayContinuePrompt();
+        }
+
         /// <summary>
         /// get and validate the player's TARDIS destination
         /// </summary>

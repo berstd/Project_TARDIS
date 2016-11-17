@@ -124,8 +124,12 @@ namespace Project_TARDIS
                         //
                         // TODO write a DisplayLookAt method that lists game object name and details in the location
                         //
-                        _gameConsoleView.DisplayLookAt();
-
+                        //_gameConsoleView.DisplayLookAt();
+                        List<string> choices = new List<string> {"Items", "Treasures" };
+                        int i = ConsoleView.ViewChooseFromList("Items, or Treasures?", choices);
+                        string s = choices[i-1];
+                        ConsoleUtil.DisplayPromptMessage("Chose: " + s);
+                        ConsoleViewHelpers.DisplayContinuePrompt();
                         break;
                     case TravelerAction.PickUpItem:
                         //

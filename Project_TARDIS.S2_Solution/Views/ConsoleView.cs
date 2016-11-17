@@ -20,7 +20,53 @@ namespace Project_TARDIS
         Traveler _gameTraveler;
 
         #endregion
+        #region DYLAN
 
+        /// <summary>
+        /// generate a table of item names and ids
+        /// </summary>
+        public static int ViewChooseFromList<T>(string prompt, List<T> choices)
+        {
+            if (choices.Count == 0)
+            {
+                ConsoleUtil.DisplayMessage("Empty list!");
+                return -1;
+            }
+            ConsoleUtil.HeaderText = "Menu";
+            ConsoleUtil.DisplayReset();
+
+
+            int i = 0;
+            foreach (T obj in choices)
+            {
+                i++;
+                ConsoleUtil.DisplayMessage(i + ". "+ obj.ToString());
+            }
+
+            int objIndex = 0;
+
+            Console.WriteLine("Test");
+            objIndex = ConsoleViewHelpers.DisplayGetIntegerPrompt(prompt, 1, i);
+            return objIndex;
+        }
+        public static void ViewTableList<T>(string prompt, List<T> choices)
+        {
+            //
+            // table headings
+            //
+            ConsoleUtil.DisplayMessage("ID".PadRight(10) + "Name".PadRight(20));
+            ConsoleUtil.DisplayMessage("---".PadRight(10) + "-------------".PadRight(20));
+
+            int i = 0;
+            foreach (T obj in choices)
+            {
+                i++;
+                ConsoleUtil.DisplayMessage((i + ".").PadRight(10) + obj.ToString().PadRight(20));
+            }
+
+        }
+
+        #endregion
         #region PROPERTIES
 
         #endregion

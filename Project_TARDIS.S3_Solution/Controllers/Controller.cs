@@ -84,11 +84,14 @@ namespace Project_TARDIS
             {
                 int itemID;
                 int treasureID;
-                 
+ 
                 //
                 // get a menu choice from the ConsoleView object
                 //
                 travelerActionChoice = _gameConsoleView.DisplayGetTravelerActionChoice();
+                Console.WriteLine(_gameTraveler.Lives);
+                Console.WriteLine(_gameTraveler.SpaceTimeLocationID);
+                UpdateGameStatus();
 
                 //
                 // choose an action based on the user's menu choice
@@ -106,7 +109,7 @@ namespace Project_TARDIS
                     case TravelerAction.TalkTo:
                         NPC nearbyNPC = _gameUniverse.GetNPCsBySpaceTimeLocationID(_gameTraveler.SpaceTimeLocationID)[0];
                         _gameConsoleView.DisplayTalkTo(nearbyNPC);
-                        
+
                         break;
                     case TravelerAction.PickUpItem:
                         itemID = _gameConsoleView.DisplayPickUpItem();
@@ -175,6 +178,21 @@ namespace Project_TARDIS
             // close the application
             //
             Environment.Exit(1);
+        }
+
+        private void UpdateGameStatus()
+        {
+            if (_gameTraveler.SpaceTimeLocationID == 2)
+            {
+                _gameTraveler.Lives--;
+                _gameTraveler.SpaceTimeLocationID = 1;
+                _gameConsoleView.DisplaySpawn();
+            }
+        }
+
+        private void updateGameStatus()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

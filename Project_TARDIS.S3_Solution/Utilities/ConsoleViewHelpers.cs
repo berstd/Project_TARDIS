@@ -8,6 +8,43 @@ namespace Project_TARDIS
 {
     public static class ConsoleViewHelpers
     {
+
+        #region DYLAN
+
+        /// <summary>
+        /// generate a table of item names and ids
+        /// </summary>
+        public static int ViewChooseFromList<T>(string prompt, List<T> choices) 
+        {
+            if (choices.Count ==0)
+            {
+                return -1;
+            }
+            ConsoleUtil.HeaderText = "Menu";
+            ConsoleUtil.DisplayReset();
+
+            //
+            // table headings
+            //
+            ConsoleUtil.DisplayMessage("ID".PadRight(10) + "Name".PadRight(20));
+            ConsoleUtil.DisplayMessage("---".PadRight(10) + "-------------".PadRight(20));
+
+            int i = 0;
+            foreach (T obj in choices)
+            {
+                i++;
+                ConsoleUtil.DisplayMessage((i + ".").PadRight(10) + obj.ToString().PadRight(20));
+            }
+
+            int objIndex = 0;
+           
+            Console.WriteLine();
+            objIndex = ConsoleViewHelpers.DisplayGetIntegerPrompt(prompt, 1, i);
+            return objIndex;
+        }
+
+        #endregion
+
         /// <summary>
         /// Display a Yes or No prompt with a message
         /// </summary>

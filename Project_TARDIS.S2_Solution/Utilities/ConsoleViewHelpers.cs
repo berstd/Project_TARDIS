@@ -65,14 +65,14 @@ namespace Project_TARDIS
 
             while (!validResponse)
             {
-                ConsoleUtil.DisplayReset();
+                //ConsoleUtil.DisplayReset();
 
-                ConsoleUtil.DisplayPromptMessage($"{promptMessage} ({minNumber} - {maxNumber}");
+                ConsoleUtil.DisplayPromptMessage($"{promptMessage} ({minNumber} - {maxNumber})");
                 userResponse = Console.ReadLine();
 
                 if (int.TryParse(userResponse, out intChoice))
                 {
-                    if (intChoice >= maxNumber && intChoice <= maxNumber)
+                    if (intChoice >= minNumber && intChoice <= maxNumber)
                     {
                         validResponse = true;
                     }

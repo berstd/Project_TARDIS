@@ -12,8 +12,17 @@ namespace Project_TARDIS
 
         private List<Item> _travelersItems;
         private List<Treasure> _travelersTreasures;
+        private int _lives;
 
         #endregion
+
+        #region PROPERTIES
+
+        public int Lives
+        {
+            get { return _lives; }
+            set { _lives = value; }
+        }
 
         public List<Item> TravelersItems
         {
@@ -27,8 +36,6 @@ namespace Project_TARDIS
             set { _travelersTreasures = value; }
         }
 
-        #region PROPERTIES
-
 
 
         #endregion
@@ -40,6 +47,7 @@ namespace Project_TARDIS
         {
             _travelersItems = new List<Item>();
             _travelersTreasures = new List<Treasure>();
+            _lives = 3;
         }
 
         public Traveler(string name, RaceType race, int spaceTimeLocationID) : base(name, race, spaceTimeLocationID)
